@@ -1,0 +1,275 @@
+{
+  "name": "FAAST Education",
+  "fullName": "FAAST Education | Faisalabad",
+  "tagline": "Each one Teach one",
+  "location": "13-C Ali Tower, Jaranwala Road, Near RCG Plaza, Faisalabad, Pakistan",
+  "locationShort": "Kohinoor City, Faisalabad, Punjab",
+  "phone": "03418576000",
+  "phone2": "03418576000",
+  "email": "Faastacademyofficial@gmail.com",
+  "website": "www.faasteducation.com",
+  "facebookUrl": "https://www.facebook.com/p/FAAST-Education-100064106918760/",
+  "whatsapp": "923418576000",
+  "description": "FAAST Education is a premier educational institution in Faisalabad dedicated to providing advanced coaching and entry test preparation for students of all levels. We specialize in MDCAT, NUST NET, NUMS, NTS, LUMS, FUNG and evening coaching programs with a focus on delivering quality education with personalized attention.",
+  "heroBackground": "/uploads/1784284115040-faast_logo.jpeg",
+  "announcement": {
+    "enabled": true,
+    "title": "New Admissions Open",
+    "message": "Enroll now for the upcoming batch. For LAT ",
+    "image": "/uploads/1784283993225-WhatsApp_Image_2026-07-17_at_3.18.23_PM__1_.jpeg",
+    "imageAlt": "Admissions announcement banner",
+    "ctaText": "Contact Us",
+    "ctaUrl": "#contact"
+  },
+  "programs": [
+    {
+      "id": "evening-coaching",
+      "name": "Evening Coaching",
+      "shortName": "Evening Coaching",
+      "icon": "Moon",
+      "tagline": "Academic Excellence for School & College Students",
+      "description": "Comprehensive evening coaching programs designed for Matric and Intermediate students. Our experienced faculty provides focused, personalized coaching to help students excel in their board exams with strong conceptual understanding.",
+      "details": [
+        "Matric (9th & 10th) all subjects coaching",
+        "Intermediate (FSc Pre-Medical & Pre-Engineering) coaching",
+        "Experienced subject specialists for each subject",
+        "Regular tests and detailed performance reports",
+        "Doubt-clearing sessions after every class",
+        "Past papers and exam strategy workshops",
+        "Monthly position holders recognized and rewarded",
+        "Flexible batch timings (4 PM – 9 PM)"
+      ],
+      "duration": "Full Academic Year",
+      "timing": "4:00 PM – 9:00 PM",
+      "level": "Matric & Intermediate",
+      "color": "primary",
+      "image": "/uploads/1784282195312-faast_logo.jpeg"
+    },
+    {
+      "id": "entry-test-prep",
+      "name": "Entry Test Preparation",
+      "shortName": "Entry Test Prep",
+      "icon": "Target",
+      "tagline": "Crack Every University Entry Test",
+      "description": "A comprehensive crash course designed to prepare students for all major university entry tests in Pakistan. Covering full syllabi with targeted practice, mock tests, and expert guidance to ensure maximum scores.",
+      "details": [
+        "Complete syllabus coverage for all entry tests",
+        "Subject-wise intensive sessions (Physics, Chemistry, Biology, Maths, English)",
+        "Daily practice questions and weekly mock tests",
+        "Entry test strategy and time management training",
+        "Analysis of past 10 years' papers",
+        "One-on-one doubt sessions with faculty",
+        "Score improvement guarantee",
+        "Small batch sizes for maximum attention"
+      ],
+      "duration": "3 – 6 Months",
+      "timing": "Morning & Evening Batches",
+      "level": "FSc Graduates",
+      "color": "secondary",
+      "image": "/uploads/1784284067657-WhatsApp_Image_2026-07-17_at_3.18.23_PM.jpeg"
+    },
+    {
+      "id": "net-nust",
+      "name": "NET Sessions (NUST)",
+      "shortName": "NUST NET",
+      "icon": "Cpu",
+      "tagline": "Pakistan's Top Engineering University Entry Test",
+      "description": "Specialized preparation for NUST Entry Test (NET) — one of Pakistan's most competitive engineering entrance exams. Our NET program covers all subjects with NUST-specific question patterns, MCQ strategies and extensive mock testing.",
+      "details": [
+        "Full coverage of NUST NET syllabus (Physics, Chemistry, Maths, English, IQ)",
+        "NUST-pattern MCQs from verified past papers",
+        "Subject-wise intensive sessions by NUST alumni coaches",
+        "Weekly NUST mock tests with score analysis",
+        "IQ and analytical reasoning special sessions",
+        "NET 1, NET 2, NET 3 preparation strategy",
+        "Guidance on NUST campus selection and merit lists",
+        "Interview and aggregate score calculation guidance"
+      ],
+      "duration": "3 – 4 Months",
+      "timing": "Morning & Evening Batches",
+      "level": "FSc Pre-Engineering",
+      "color": "accent",
+      "image": "/uploads/1784284060781-WhatsApp_Image_2026-07-17_at_3.18.23_PM.jpeg",
+      "university": "NUST - National University of Sciences & Technology"
+    },
+    {
+      "id": "mdcat",
+      "name": "MDCAT Preparation",
+      "shortName": "MDCAT",
+      "icon": "Heart",
+      "tagline": "Your Gateway to Medical College",
+      "description": "Comprehensive MDCAT preparation covering the full PMC syllabus. Our dedicated medical faculty helps aspiring doctors build strong conceptual foundations in Biology, Chemistry, Physics, and English to achieve top MDCAT scores.",
+      "details": [
+        "Full PMC-approved MDCAT syllabus coverage",
+        "Chapter-wise Biology, Chemistry, Physics, and English sessions",
+        "PMC-pattern daily practice MCQs (3,600+ questions)",
+        "Full-length MDCAT mock tests every Sunday",
+        "Detailed result analysis and weak area targeting",
+        "Special Biology and Chemistry intensive boot camps",
+        "Past MDCAT papers (2019–2024) fully solved",
+        "Guidance on aggregate calculation and merit estimation",
+        "Enrollment support for government medical colleges"
+      ],
+      "duration": "4 – 6 Months",
+      "timing": "Morning & Evening Batches",
+      "level": "FSc Pre-Medical (Minimum 60%)",
+      "color": "primary",
+      "image": "/uploads/1784283600159-WhatsApp_Image_2026-07-17_at_3.18.23_PM__2_.jpeg",
+      "university": "PMC - Pakistan Medical Commission"
+    },
+    {
+      "id": "nums",
+      "name": "NUMS Preparation",
+      "shortName": "NUMS",
+      "icon": "Stethoscope",
+      "tagline": "National University of Medical Sciences",
+      "description": "Targeted preparation for NUMS entry test for admission to Army Medical Colleges across Pakistan. Covers the full NUMS syllabus with special focus on Biology, Chemistry, Physics and English in the NUMS-specific MCQ format.",
+      "details": [
+        "Full NUMS entry test syllabus coverage",
+        "NUMS-specific Biology, Chemistry, Physics, English preparation",
+        "NUMS past papers analysis and practice",
+        "Weekly full-length NUMS mock tests",
+        "AMC (Army Medical College) merit and admission guidance",
+        "Special focus on NUMS-unique question patterns",
+        "Score analysis and performance improvement tracking",
+        "Guidance on NUMS test centers and registration"
+      ],
+      "duration": "3 – 4 Months",
+      "timing": "Morning & Evening Batches",
+      "level": "FSc Pre-Medical",
+      "color": "secondary",
+      "image": "/uploads/1784284031338-WhatsApp_Image_2026-07-17_at_3.18.23_PM__2_.jpeg",
+      "university": "NUMS - National University of Medical Sciences"
+    },
+    {
+      "id": "fung",
+      "name": "FUNG (FAST-NUCES)",
+      "shortName": "FUNG",
+      "icon": "Code",
+      "tagline": "FAST National University Entry Test",
+      "description": "Specialized preparation for FAST-NUCES (NU) entry test. FUNG is one of Pakistan's top Computer Science universities. Our program covers Mathematics, English, and IQ/Analytical sections with FAST-specific practice.",
+      "details": [
+        "Full FUNG syllabus: Mathematics, IQ, English",
+        "FAST-NUCES past papers and pattern analysis",
+        "Advanced Mathematics problem-solving sessions",
+        "IQ, logical reasoning and verbal ability training",
+        "Weekly FUNG mock tests with full analysis",
+        "Guidance on FAST Faisalabad campus admission",
+        "CS/IT program selection and career counseling",
+        "Aggregate calculation and merit estimation support"
+      ],
+      "duration": "2 – 3 Months",
+      "timing": "Morning & Evening Batches",
+      "level": "FSc Pre-Engineering / ICS",
+      "color": "accent",
+      "image": "/uploads/1784283610657-WhatsApp_Image_2026-07-17_at_3.18.23_PM__2_.jpeg",
+      "university": "FAST-NUCES - Foundation for Advancement of Science & Technology"
+    },
+    {
+      "id": "nts",
+      "name": "NTS Preparation",
+      "shortName": "NTS",
+      "icon": "FileText",
+      "tagline": "National Testing Service — All Tests Covered",
+      "description": "Comprehensive preparation for all NTS-based tests including NAT (National Aptitude Test) and GAT (Graduate Assessment Test). Covers all subject areas including verbal, quantitative, and analytical reasoning sections.",
+      "details": [
+        "NAT-I (for undergraduate admissions) full preparation",
+        "NAT-II (for postgraduate admissions) full preparation",
+        "GAT-General and GAT-Subject preparation",
+        "Verbal, Quantitative and Analytical Reasoning mastery",
+        "NTS past papers (10+ years) practice and analysis",
+        "Time management and MCQ-solving strategies",
+        "Weekly NTS full-length mock tests",
+        "Registration guidance and test center information"
+      ],
+      "duration": "1 – 2 Months",
+      "timing": "Flexible Batches",
+      "level": "Intermediate & Graduates",
+      "color": "primary",
+      "image": "/program-business.png",
+      "university": "NTS - National Testing Service Pakistan"
+    },
+    {
+      "id": "lums",
+      "name": "LUMS Preparation",
+      "shortName": "LUMS",
+      "icon": "GraduationCap",
+      "tagline": "Pakistan's Ivy League — LUMS Entry Test",
+      "description": "Exclusive preparation for LUMS (Lahore University of Management Sciences) entry test — one of Pakistan's most prestigious and competitive admissions. Covers SAT-style reasoning, Mathematics and English at an advanced level.",
+      "details": [
+        "LUMS SSE and SDSB entry test full preparation",
+        "SAT-style Mathematics (advanced algebra, calculus basics)",
+        "Critical Reading and English comprehension mastery",
+        "Logical Reasoning and analytical thinking sessions",
+        "LUMS past test papers and model papers practice",
+        "Essay writing and interview preparation support",
+        "Merit estimation and scholarship guidance",
+        "Small, elite batch sizes for individual attention"
+      ],
+      "duration": "2 – 3 Months",
+      "timing": "Morning Batches",
+      "level": "High-Achieving FSc / A-Level Students",
+      "color": "secondary",
+      "image": "/uploads/1784284044001-WhatsApp_Image_2026-07-17_at_3.18.22_PM.jpeg",
+      "university": "LUMS - Lahore University of Management Sciences"
+    }
+  ],
+  "achievements": {
+    "rating": "100% recommend",
+    "reviews": 22,
+    "facebookLikes": 6020,
+    "talkingAbout": 123,
+    "followers": "6K+",
+    "studentPositions": "Monthly position holders recognized regularly"
+  },
+  "features": [
+    "Experienced and highly qualified faculty",
+    "Personalized attention with small batch sizes",
+    "Regular tests, mock exams & performance tracking",
+    "Monthly recognition for top performers",
+    "Flexible batch timings (Morning & Evening)",
+    "Affordable fee structure with easy installments",
+    "Dedicated doubt-clearing sessions",
+    "Proven track record of top results"
+  ],
+  "facilities": [
+    {
+      "title": "Premium Library",
+      "description": "Access to thousands of books, journals, and digital resources for continuous learning.",
+      "icon": "BookOpen",
+      "image": "/facility-library.png"
+    },
+    {
+      "title": "Advanced Lab",
+      "description": "State-of-the-art computer lab with latest software and technology infrastructure.",
+      "icon": "Cpu",
+      "image": "/facility-lab.png"
+    },
+    {
+      "title": "Modern Auditorium",
+      "description": "Professional lecture halls equipped with high-tech audio-visual and presentation systems.",
+      "icon": "Presentation",
+      "image": "/facility-auditorium.png"
+    },
+    {
+      "title": "Networking Lounge",
+      "description": "Elegant spaces designed for professional networking and collaborative learning.",
+      "icon": "Coffee",
+      "image": "/facility-lounge.png"
+    }
+  ],
+  "galleryImages": [
+    {
+      "src": "/reward cermoney.jpeg",
+      "title": "Reward Ceremony"
+    },
+    {
+      "src": "/annual dinner.jpeg",
+      "title": "Annual Dinner"
+    },
+    {
+      "src": "/practical session.jpeg",
+      "title": "Practical Sessions"
+    }
+  ]
+}

@@ -19,11 +19,12 @@ type Facility = {
   title: string
   description: string
   icon: string
-  image: string
+  image?: string
 }
 
 export default function Facilities() {
   const [facilities, setFacilities] = useState<Facility[]>([])
+  const [failedImages, setFailedImages] = useState<Set<number>>(new Set())
 
   useEffect(() => {
     fetch('/api/site-content')
@@ -35,35 +36,6 @@ export default function Facilities() {
         setFacilities([])
       })
   }, [])
-
-  const displayFacilities = facilities.length
-    ? facilities
-    : [
-        {
-          title: 'Premium Library',
-          description: 'Access to thousands of books, journals, and digital resources for continuous learning.',
-          icon: 'BookOpen',
-          image: '/facility-library.png',
-        },
-        {
-          title: 'Advanced Lab',
-          description: 'State-of-the-art computer lab with latest software and technology infrastructure.',
-          icon: 'Cpu',
-          image: '/facility-lab.png',
-        },
-        {
-          title: 'Modern Auditorium',
-          description: 'Professional lecture halls equipped with high-tech audio-visual and presentation systems.',
-          icon: 'Presentation',
-          image: '/facility-auditorium.png',
-        },
-        {
-          title: 'Networking Lounge',
-          description: 'Elegant spaces designed for professional networking and collaborative learning.',
-          icon: 'Coffee',
-          image: '/facility-lounge.png',
-        },
-      ]
 
   return (
     <section id="facilities" className="py-20 bg-background">
@@ -83,7 +55,7 @@ export default function Facilities() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {displayFacilities.map((facility, index) => {
+          {facilities.map((facility, index) => {
             const Icon = iconMap[facility.icon as keyof typeof iconMap] ?? BookOpen
             return (
               <motion.div
@@ -95,12 +67,15 @@ export default function Facilities() {
                 whileHover={{ y: -5 }}
               >
                 <div className="relative h-56 rounded-xl overflow-hidden mb-4 bg-muted">
-                  <Image
-                    src={facility.image}
-                    alt={facility.title}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
+                  {facility.image && !failedImages.has(index) && (
+                    <Image
+                      src={facility.image}
+                      alt={facility.title}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={() => setFailedImages((prev) => new Set(prev).add(index))}
+                    />
+                  )}
                   <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/60 transition-all"></div>
                   <div className="absolute inset-0 flex items-center justify-center">
                     <Icon className="w-12 h-12 text-white group-hover:scale-125 transition-transform" />

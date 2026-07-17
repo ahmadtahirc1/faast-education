@@ -16,12 +16,12 @@ const defaultContent = {
   facebookUrl: 'https://www.facebook.com/p/FAAST-Education-100064106918760/',
   whatsapp: '923418576000',
   description: 'FAAST Education is a premier educational institution in Faisalabad dedicated to providing advanced coaching and entry test preparation for students of all levels.',
-  heroBackground: '/hero-bg.png',
+  heroBackground: '',
   announcement: {
     enabled: true,
     title: 'New Admissions Open',
     message: 'Enroll now for the upcoming batch. Limited seats available for MDCAT, NUST NET, NUMS, and other entry test programs.',
-    image: '/hero-bg.png',
+    image: '',
     imageAlt: 'Admissions announcement banner',
     ctaText: 'Contact Us',
     ctaUrl: '#contact',
@@ -159,7 +159,7 @@ export default function AdminClient() {
           timing: 'Flexible',
           level: 'All Levels',
           color: 'primary',
-          image: '/program-tech.png',
+          image: '',
         },
       ],
     }))
@@ -170,7 +170,7 @@ export default function AdminClient() {
       ...prev,
       galleryImages: [
         ...(prev.galleryImages ?? []),
-        { src: '/gallery-1.png', title: 'New Gallery Image' },
+        { src: '', title: 'New Gallery Image' },
       ],
     }))
   }
@@ -183,7 +183,7 @@ export default function AdminClient() {
         {
           title: 'New Facility',
           description: 'Add a short facility description.',
-          image: '/facility-library.png',
+          image: '',
           icon: 'BookOpen',
         },
       ],
@@ -545,8 +545,12 @@ export default function AdminClient() {
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {(content.galleryImages ?? []).map((image, index) => (
               <div key={`${image.src}-${index}`} className="rounded-xl border border-white/10 bg-slate-800 p-4">
-                <div className="relative mb-3 h-48 overflow-hidden rounded-lg">
-                  <Image src={image.src} alt={image.title} fill className="object-cover" />
+                <div className="relative mb-3 h-48 overflow-hidden rounded-lg bg-slate-700 flex items-center justify-center">
+                  {image.src ? (
+                    <Image src={image.src} alt={image.title} fill className="object-cover" />
+                  ) : (
+                    <span className="text-sm text-slate-400">No image yet</span>
+                  )}
                 </div>
                 <label className="mb-2 block text-sm text-slate-300">Title</label>
                 <input

@@ -20,6 +20,7 @@ type HeroContent = {
 export default function Hero() {
   const [content, setContent] = useState<HeroContent>({})
   const [isAnnouncementDismissed, setIsAnnouncementDismissed] = useState(false)
+  const [heroImageFailed, setHeroImageFailed] = useState(false)
 
   useEffect(() => {
     fetch('/api/site-content')
@@ -28,7 +29,7 @@ export default function Hero() {
       .catch(() => undefined)
   }, [])
 
-  const heroImage = content.heroBackground || '/hero-bg.png'
+  const heroImage = !heroImageFailed ? content.heroBackground : undefined
   const announcement = content.announcement || { enabled: false, title: '', message: '' }
 
   const dismissAnnouncement = () => {
@@ -36,14 +37,17 @@ export default function Hero() {
   }
 
   return (
-    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden pt-24 sm:pt-20">
-      <Image
-        src={heroImage}
-        alt="FAAST Education Faisalabad"
-        fill
-        className="object-cover absolute inset-0"
-        priority
-      />
+    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden pt-24 sm:pt-20 bg-primary">
+      {heroImage && (
+        <Image
+          src={heroImage as string}
+          alt="FAAST Education Faisalabad"
+          fill
+          className="object-cover absolute inset-0"
+          priority
+          onError={() => setHeroImageFailed(true)}
+        />
+      )}
       <div className="absolute inset-0 bg-primary/65" />
 
       {announcement.enabled && !isAnnouncementDismissed && (

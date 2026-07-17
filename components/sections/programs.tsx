@@ -24,56 +24,22 @@ type ProgramItem = {
   timing: string
   level: string
   color: string
-  image: string
+  image?: string
   badge?: string
   badgeColor?: string
   university?: string
 }
 
-const fallbackPrograms: ProgramItem[] = [
-  {
-    id: 'evening-coaching',
-    name: 'Evening Coaching',
-    shortName: 'Evening Coaching',
-    icon: 'Moon',
-    tagline: 'Academic Excellence for School & College Students',
-    description:
-      'Comprehensive evening coaching programs designed for Matric and Intermediate students.',
-    details: ['Matric & Intermediate support'],
-    duration: 'Full Academic Year',
-    timing: '4:00 PM – 9:00 PM',
-    level: 'Matric & Intermediate',
-    badge: 'Most Popular',
-    badgeColor: 'bg-secondary',
-    image: '/program-business.png',
-    color: 'primary',
-  },
-  {
-    id: 'entry-test-prep',
-    name: 'Entry Test Preparation',
-    shortName: 'Entry Test',
-    icon: 'Target',
-    tagline: 'Crack Every University Entry Test',
-    description:
-      'A comprehensive crash course designed to prepare students for all major university entry tests in Pakistan.',
-    details: ['Preparation for all major entrance tests'],
-    duration: '3 – 6 Months',
-    timing: 'Morning & Evening Batches',
-    level: 'FSc Graduates',
-    color: 'primary',
-    image: '/program-tech.png',
-  },
-]
-
 export default function Programs() {
   const [expandedId, setExpandedId] = useState<string | null>(null)
-  const [programs, setPrograms] = useState<ProgramItem[]>(fallbackPrograms)
+  const [programs, setPrograms] = useState<ProgramItem[]>([])
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set())
 
   useEffect(() => {
     fetch('/api/site-content')
       .then((response) => response.json())
-      .then((data) => setPrograms(data.programs ?? fallbackPrograms))
-      .catch(() => setPrograms(fallbackPrograms))
+      .then((data) => setPrograms(data.programs ?? []))
+      .catch(() => setPrograms([]))
   }, [])
 
   return (
@@ -108,12 +74,15 @@ export default function Programs() {
                 whileHover={{ y: -6 }}
               >
                 <div className="relative h-36 overflow-hidden bg-muted flex-shrink-0">
-                  <Image
-                    src={program.image}
-                    alt={program.name}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
+                  {program.image && !failedImages.has(program.id) && (
+                    <Image
+                      src={program.image}
+                      alt={program.name}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      onError={() => setFailedImages((prev) => new Set(prev).add(program.id))}
+                    />
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/40 to-transparent" />
                   {program.badge && (
                     <span className={`absolute top-3 right-3 ${program.badgeColor ?? 'bg-primary'} text-white text-xs font-bold px-2 py-1 rounded-full`}>

@@ -186,7 +186,6 @@
       "timing": "Flexible Batches",
       "level": "Intermediate & Graduates",
       "color": "primary",
-      "image": "/program-business.png",
       "university": "NTS - National Testing Service Pakistan"
     },
     {
@@ -236,26 +235,22 @@
     {
       "title": "Premium Library",
       "description": "Access to thousands of books, journals, and digital resources for continuous learning.",
-      "icon": "BookOpen",
-      "image": "/facility-library.png"
+      "icon": "BookOpen"
     },
     {
       "title": "Advanced Lab",
       "description": "State-of-the-art computer lab with latest software and technology infrastructure.",
-      "icon": "Cpu",
-      "image": "/facility-lab.png"
+      "icon": "Cpu"
     },
     {
       "title": "Modern Auditorium",
       "description": "Professional lecture halls equipped with high-tech audio-visual and presentation systems.",
-      "icon": "Presentation",
-      "image": "/facility-auditorium.png"
+      "icon": "Presentation"
     },
     {
       "title": "Networking Lounge",
       "description": "Elegant spaces designed for professional networking and collaborative learning.",
-      "icon": "Coffee",
-      "image": "/facility-lounge.png"
+      "icon": "Coffee"
     }
   ],
   "galleryImages": [

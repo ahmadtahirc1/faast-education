@@ -37,7 +37,7 @@ export type SiteContent = {
     timing: string
     level: string
     color: string
-    image: string
+    image?: string
     badge?: string
     badgeColor?: string
     university?: string
@@ -54,7 +54,7 @@ export type SiteContent = {
   facilities?: Array<{
     title: string
     description: string
-    image: string
+    image?: string
     icon: string
   }>
   galleryImages?: Array<{

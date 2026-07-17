@@ -58,24 +58,29 @@ export default function AdminClient() {
   const facilityCount = useMemo(() => content.facilities?.length ?? 0, [content.facilities])
   const galleryCount = useMemo(() => content.galleryImages?.length ?? 0, [content.galleryImages])
 
-  const handleSave = async () => {
+  const persistContent = async (nextContent: typeof content) => {
+    setContent(nextContent)
+
     const res = await fetch('/api/site-content', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(content),
+      body: JSON.stringify(nextContent),
     })
 
-    if (res.ok) {
-      setStatus('Content saved successfully.')
-      return
-    }
+    if (res.ok) return true
 
     try {
       const body = await res.json()
-      setStatus(`Unable to save content: ${body.error ?? 'unknown error'}`)
+      setStatus(`Unable to save: ${body.error ?? 'unknown error'}`)
     } catch {
-      setStatus(`Unable to save content (server returned status ${res.status}).`)
+      setStatus(`Unable to save (server returned status ${res.status}).`)
     }
+    return false
+  }
+
+  const handleSave = async () => {
+    const ok = await persistContent(content)
+    if (ok) setStatus('Content saved successfully.')
   }
 
   const uploadAndUpdate = async (
@@ -104,31 +109,37 @@ export default function AdminClient() {
       return
     }
 
+    let nextContent = content
+    let label = 'Image'
+
     if (type === 'program') {
       const next = [...(content.programs ?? [])]
       next[index] = { ...next[index], image: uploaded.url }
-      setContent({ ...content, programs: next })
-      setStatus('Program image updated.')
+      nextContent = { ...content, programs: next }
+      label = 'Program image'
     } else if (type === 'gallery') {
       const next = [...(content.galleryImages ?? [])]
       next[index] = { ...next[index], src: uploaded.url }
-      setContent({ ...content, galleryImages: next })
-      setStatus('Gallery image updated.')
+      nextContent = { ...content, galleryImages: next }
+      label = 'Gallery image'
     } else if (type === 'hero') {
-      setContent({ ...content, heroBackground: uploaded.url })
-      setStatus('Hero background updated.')
+      nextContent = { ...content, heroBackground: uploaded.url }
+      label = 'Hero background'
     } else if (type === 'facility') {
       const next = [...(content.facilities ?? [])]
       next[index] = { ...next[index], image: uploaded.url }
-      setContent({ ...content, facilities: next })
-      setStatus('Facility image updated.')
+      nextContent = { ...content, facilities: next }
+      label = 'Facility image'
     } else {
-      setContent({
+      nextContent = {
         ...content,
         announcement: { ...content.announcement, image: uploaded.url },
-      })
-      setStatus('Announcement image updated.')
+      }
+      label = 'Announcement image'
     }
+
+    const ok = await persistContent(nextContent)
+    if (ok) setStatus(`${label} updated and saved.`)
   }
 
   const addProgram = () => {

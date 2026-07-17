@@ -80,7 +80,7 @@ export async function getSiteContent(): Promise<SiteContent> {
     const match = blobs.find((blob) => blob.pathname === BLOB_PATHNAME)
     if (!match) return readBundledDefault()
 
-    const response = await fetch(match.url, { cache: 'no-store' })
+    const response = await fetch(`${match.url}?v=${Date.now()}`, { cache: 'no-store' })
     if (!response.ok) return readBundledDefault()
 
     return (await response.json()) as SiteContent
@@ -101,5 +101,6 @@ export async function saveSiteContent(content: SiteContent) {
     contentType: 'application/json',
     addRandomSuffix: false,
     allowOverwrite: true,
+    cacheControlMaxAge: 0,
   })
 }

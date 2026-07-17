@@ -1,5 +1,4 @@
-import { promises as fs } from 'fs'
-import path from 'path'
+import { put } from '@vercel/blob'
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
@@ -10,16 +9,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'No file provided' }, { status: 400 })
   }
 
-  const uploadsDir = path.join(process.cwd(), 'public', 'uploads')
-  await fs.mkdir(uploadsDir, { recursive: true })
-
   const safeName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9_.-]/g, '_')}`
-  const fileBuffer = Buffer.from(await file.arrayBuffer())
-  const filePath = path.join(uploadsDir, safeName)
 
-  await fs.writeFile(filePath, fileBuffer)
+  const blob = await put(safeName, file, {
+    access: 'public',
+  })
 
   return NextResponse.json({
-    url: `/uploads/${safeName}`,
+    url: blob.url,
   })
 }

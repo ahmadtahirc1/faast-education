@@ -85,9 +85,16 @@ export default function AdminClient() {
       body: formData,
     })
 
-    const uploaded = await uploadRes.json()
+    let uploaded: { url?: string; error?: string }
+    try {
+      uploaded = await uploadRes.json()
+    } catch {
+      setStatus(`Image upload failed (server returned status ${uploadRes.status}).`)
+      return
+    }
+
     if (!uploaded.url) {
-      setStatus('Image upload failed.')
+      setStatus(`Image upload failed: ${uploaded.error ?? 'unknown error'}`)
       return
     }
 

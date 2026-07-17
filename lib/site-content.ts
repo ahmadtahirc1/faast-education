@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs'
 import path from 'path'
+import { list, put } from '@vercel/blob'
 
 export type SiteContent = {
   name: string
@@ -63,12 +64,42 @@ export type SiteContent = {
 }
 
 const contentPath = path.join(process.cwd(), 'data', 'academy.json')
+const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN
+const BLOB_PATHNAME = 'academy.json'
 
-export async function getSiteContent(): Promise<SiteContent> {
+async function readBundledDefault(): Promise<SiteContent> {
   const raw = await fs.readFile(contentPath, 'utf8')
   return JSON.parse(raw) as SiteContent
 }
 
+export async function getSiteContent(): Promise<SiteContent> {
+  if (!BLOB_TOKEN) return readBundledDefault()
+
+  try {
+    const { blobs } = await list({ prefix: BLOB_PATHNAME, token: BLOB_TOKEN, limit: 1 })
+    const match = blobs.find((blob) => blob.pathname === BLOB_PATHNAME)
+    if (!match) return readBundledDefault()
+
+    const response = await fetch(match.url, { cache: 'no-store' })
+    if (!response.ok) return readBundledDefault()
+
+    return (await response.json()) as SiteContent
+  } catch (error) {
+    console.error('Failed to load site content from Blob, falling back to bundled defaults:', error)
+    return readBundledDefault()
+  }
+}
+
 export async function saveSiteContent(content: SiteContent) {
-  await fs.writeFile(contentPath, JSON.stringify(content, null, 2), 'utf8')
+  if (!BLOB_TOKEN) {
+    throw new Error('Blob storage is not configured (missing BLOB_READ_WRITE_TOKEN).')
+  }
+
+  await put(BLOB_PATHNAME, JSON.stringify(content, null, 2), {
+    access: 'public',
+    token: BLOB_TOKEN,
+    contentType: 'application/json',
+    addRandomSuffix: false,
+    allowOverwrite: true,
+  })
 }

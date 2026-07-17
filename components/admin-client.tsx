@@ -67,8 +67,14 @@ export default function AdminClient() {
 
     if (res.ok) {
       setStatus('Content saved successfully.')
-    } else {
-      setStatus('Unable to save content right now.')
+      return
+    }
+
+    try {
+      const body = await res.json()
+      setStatus(`Unable to save content: ${body.error ?? 'unknown error'}`)
+    } catch {
+      setStatus(`Unable to save content (server returned status ${res.status}).`)
     }
   }
 

@@ -1,11 +1,11 @@
 import { put } from '@vercel/blob'
 import { NextResponse } from 'next/server'
 
-const BLOB_TOKEN = process.env.faastblob_READ_WRITE_TOKEN || process.env.BLOB_READ_WRITE_TOKEN
+const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN
 
 export async function POST(request: Request) {
   if (!BLOB_TOKEN) {
-    console.error('Upload failed: no Blob read/write token set (checked faastblob_READ_WRITE_TOKEN and BLOB_READ_WRITE_TOKEN)')
+    console.error('Upload failed: BLOB_READ_WRITE_TOKEN is not set')
     return NextResponse.json(
       { error: 'Blob storage is not configured (missing read/write token).' },
       { status: 500 },

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { GraduationCap } from 'lucide-react'
 
 type HeroContent = {
   heroBackground?: string
@@ -37,7 +38,7 @@ export default function Hero() {
   }
 
   return (
-    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden pt-24 sm:pt-20 bg-primary">
+    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden pt-20 sm:pt-[116px] bg-primary">
       {heroImage && (
         <Image
           src={heroImage as string}
@@ -86,7 +87,7 @@ export default function Hero() {
               {announcement.ctaText && announcement.ctaUrl && (
                 <a
                   href={announcement.ctaUrl}
-                  className="inline-flex items-center justify-center rounded-full bg-accent px-4 py-2 text-xs font-bold text-primary sm:text-sm"
+                  className="inline-flex items-center justify-center rounded-full bg-accent px-4 py-2 text-xs font-bold text-accent-foreground sm:text-sm"
                 >
                   {announcement.ctaText}
                 </a>
@@ -109,8 +110,8 @@ export default function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.1 }}
           >
-            <span className="text-accent">⭐</span>
-            100% Recommended · 6,000+ Community Members · Faisalabad
+            <GraduationCap className="w-4 h-4 text-accent" />
+            Faisalabad&apos;s Coaching Institute for Board &amp; Entry Test Success
           </motion.div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight">
@@ -134,7 +135,7 @@ export default function Hero() {
             href="https://wa.me/923418576000?text=Hi%2C%20I%20am%20interested%20in%20enrolling%20at%20FAAST%20Education.%20Please%20share%20details."
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-accent text-primary px-8 py-4 rounded-lg font-bold text-lg hover:shadow-2xl transition-all inline-block"
+            className="bg-accent text-accent-foreground px-8 py-4 rounded-lg font-bold text-lg hover:shadow-2xl transition-all inline-block"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -150,29 +151,9 @@ export default function Hero() {
           </motion.a>
         </motion.div>
 
-        {/* Stats Row */}
-        <motion.div
-          className="mt-14 flex flex-wrap justify-center gap-6 md:gap-10 text-white/80"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          {[
-            { value: '6,000+', label: 'Community Members' },
-            { value: '100%', label: 'Recommend Rate' },
-            { value: '8+', label: 'Programs Offered' },
-            { value: '22+', label: 'Verified Reviews' },
-          ].map((stat, i) => (
-            <div key={i} className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-accent">{stat.value}</div>
-              <div className="text-xs md:text-sm mt-1">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
-
         {/* Program Quick Links */}
         <motion.div
-          className="mt-8 flex flex-wrap justify-center gap-2"
+          className="mt-14 flex flex-wrap justify-center gap-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}

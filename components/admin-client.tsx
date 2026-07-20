@@ -2,8 +2,19 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
+import type { SiteContent } from '@/lib/site-content'
 
-const defaultContent = {
+const defaultAnnouncement: NonNullable<SiteContent['announcement']> = {
+  enabled: true,
+  title: 'New Admissions Open',
+  message: 'Enroll now for the upcoming batch. Limited seats available for MDCAT, NUST NET, NUMS, and other entry test programs.',
+  image: '',
+  imageAlt: 'Admissions announcement banner',
+  ctaText: 'Contact Us',
+  ctaUrl: '#contact',
+}
+
+const defaultContent: SiteContent = {
   name: 'FAAST Education',
   fullName: 'FAAST Education | Faisalabad',
   tagline: 'Each one Teach one',
@@ -17,15 +28,8 @@ const defaultContent = {
   whatsapp: '923418576000',
   description: 'FAAST Education is a premier educational institution in Faisalabad dedicated to providing advanced coaching and entry test preparation for students of all levels.',
   heroBackground: '',
-  announcement: {
-    enabled: true,
-    title: 'New Admissions Open',
-    message: 'Enroll now for the upcoming batch. Limited seats available for MDCAT, NUST NET, NUMS, and other entry test programs.',
-    image: '',
-    imageAlt: 'Admissions announcement banner',
-    ctaText: 'Contact Us',
-    ctaUrl: '#contact',
-  },
+  founderImage: '',
+  announcement: defaultAnnouncement,
   programs: [],
   achievements: {
     rating: '100% recommend',
@@ -36,6 +40,7 @@ const defaultContent = {
     studentPositions: 'Monthly position holders recognized regularly',
   },
   features: [],
+  facilities: [],
   galleryImages: [],
 }
 
@@ -85,7 +90,7 @@ export default function AdminClient() {
 
   const uploadAndUpdate = async (
     file: File,
-    type: 'program' | 'gallery' | 'hero' | 'announcement' | 'facility',
+    type: 'program' | 'gallery' | 'hero' | 'announcement' | 'facility' | 'founder',
     index: number,
   ) => {
     const formData = new FormData()
@@ -130,10 +135,13 @@ export default function AdminClient() {
       next[index] = { ...next[index], image: uploaded.url }
       nextContent = { ...content, facilities: next }
       label = 'Facility image'
+    } else if (type === 'founder') {
+      nextContent = { ...content, founderImage: uploaded.url }
+      label = 'Founder photo'
     } else {
       nextContent = {
         ...content,
-        announcement: { ...content.announcement, image: uploaded.url },
+        announcement: { ...(content.announcement ?? defaultAnnouncement), image: uploaded.url },
       }
       label = 'Announcement image'
     }
@@ -280,7 +288,7 @@ export default function AdminClient() {
                   setContent({
                     ...content,
                     announcement: {
-                      ...content.announcement,
+                      ...(content.announcement ?? defaultAnnouncement),
                       enabled: e.target.value === 'true',
                     },
                   })
@@ -298,7 +306,7 @@ export default function AdminClient() {
                 onChange={(e) =>
                   setContent({
                     ...content,
-                    announcement: { ...content.announcement, image: e.target.value },
+                    announcement: { ...(content.announcement ?? defaultAnnouncement), image: e.target.value },
                   })
                 }
                 className="w-full rounded-lg border border-white/10 bg-slate-800 px-3 py-2"
@@ -323,7 +331,7 @@ export default function AdminClient() {
                 onChange={(e) =>
                   setContent({
                     ...content,
-                    announcement: { ...content.announcement, title: e.target.value },
+                    announcement: { ...(content.announcement ?? defaultAnnouncement), title: e.target.value },
                   })
                 }
                 className="w-full rounded-lg border border-white/10 bg-slate-800 px-3 py-2"
@@ -336,7 +344,7 @@ export default function AdminClient() {
                 onChange={(e) =>
                   setContent({
                     ...content,
-                    announcement: { ...content.announcement, message: e.target.value },
+                    announcement: { ...(content.announcement ?? defaultAnnouncement), message: e.target.value },
                   })
                 }
                 className="min-h-24 w-full rounded-lg border border-white/10 bg-slate-800 px-3 py-2"
@@ -349,7 +357,7 @@ export default function AdminClient() {
                 onChange={(e) =>
                   setContent({
                     ...content,
-                    announcement: { ...content.announcement, ctaText: e.target.value },
+                    announcement: { ...(content.announcement ?? defaultAnnouncement), ctaText: e.target.value },
                   })
                 }
                 className="w-full rounded-lg border border-white/10 bg-slate-800 px-3 py-2"
@@ -362,9 +370,38 @@ export default function AdminClient() {
                 onChange={(e) =>
                   setContent({
                     ...content,
-                    announcement: { ...content.announcement, ctaUrl: e.target.value },
+                    announcement: { ...(content.announcement ?? defaultAnnouncement), ctaUrl: e.target.value },
                   })
                 }
+                className="w-full rounded-lg border border-white/10 bg-slate-800 px-3 py-2"
+              />
+            </label>
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-white/10 bg-slate-900 p-6">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-2xl font-semibold">Founder</h2>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <label className="space-y-1">
+              <span className="text-sm text-slate-300">Founder Photo Path</span>
+              <input
+                value={content.founderImage ?? ''}
+                onChange={(e) => setContent({ ...content, founderImage: e.target.value })}
+                className="w-full rounded-lg border border-white/10 bg-slate-800 px-3 py-2"
+              />
+            </label>
+            <label className="space-y-1">
+              <span className="text-sm text-slate-300">Upload Founder Photo</span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) uploadAndUpdate(file, 'founder', 0)
+                }}
                 className="w-full rounded-lg border border-white/10 bg-slate-800 px-3 py-2"
               />
             </label>

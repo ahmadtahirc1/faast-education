@@ -78,15 +78,6 @@ export default function Footer() {
               Faisalabad&apos;s premier coaching institute for academic excellence and university entry test preparation.
             </p>
 
-            {/* Rating */}
-            <div className="flex items-center gap-2 mb-5 bg-white/10 rounded-lg p-3">
-              <span className="text-accent text-lg">★★★★★</span>
-              <div>
-                <p className="text-sm font-semibold">100% Recommended</p>
-                <p className="text-white/50 text-xs">22+ verified reviews</p>
-              </div>
-            </div>
-
             {/* Social Links */}
             <div className="flex gap-3">
               {socialLinks.map((social, index) => {

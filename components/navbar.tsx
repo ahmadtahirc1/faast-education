@@ -1,22 +1,12 @@
 'use client'
 
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { Menu, X, Phone, MessageCircle } from 'lucide-react'
 import { ThemeToggle } from './theme-toggle'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
-    }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   const navItems = [
     { label: 'Home', href: '/' },
@@ -28,97 +18,99 @@ export default function Navbar() {
   ]
 
   return (
-    <motion.nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-card/95 shadow-lg backdrop-blur-md'
-          : 'bg-transparent'
-      }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          <motion.a
-            href="/"
-            className="text-2xl font-bold text-primary flex items-center gap-2"
-            whileHover={{ scale: 1.05 }}
+    <nav className="fixed top-0 left-0 right-0 z-50">
+      {/* Utility bar */}
+      <div className="hidden sm:block bg-primary text-primary-foreground">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-end gap-6 text-xs font-medium">
+          <a href="tel:+923418576000" className="flex items-center gap-1.5 hover:text-accent transition-colors">
+            <Phone className="w-3.5 h-3.5" />
+            03418576000
+          </a>
+          <a
+            href="https://wa.me/923418576000"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 hover:text-accent transition-colors"
           >
-            <Image
-              src="/faast logo.jpeg"
-              alt="FAAST Education logo"
-              width={48}
-              height={48}
-              priority
-              className="object-contain"
-            />
-            <span>FAAST</span>
-          </motion.a>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex gap-8 items-center">
-            {navItems.map((item) => (
-              <motion.a
-                key={item.label}
-                href={item.href}
-                className="text-primary font-medium hover:text-accent transition-colors"
-                whileHover={{ scale: 1.05 }}
-              >
-                {item.label}
-              </motion.a>
-            ))}
-            <ThemeToggle />
-            <motion.a
-              href="/contact"
-              className="bg-accent text-primary px-6 py-2 rounded-lg font-semibold hover:shadow-lg transition-shadow"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Enroll Now
-            </motion.a>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-2">
-            <ThemeToggle />
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-primary"
-            >
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          </div>
+            <MessageCircle className="w-3.5 h-3.5" />
+            WhatsApp
+          </a>
         </div>
+      </div>
 
-        {/* Mobile Menu */}
-        {isOpen && (
-          <motion.div
-            className="md:hidden pb-4 space-y-2"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-          >
-            {navItems.map((item) => (
+      {/* Main nav */}
+      <div className="bg-background border-b border-border shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            <a href="/" className="flex items-center gap-3">
+              <Image
+                src="/faast logo.jpeg"
+                alt="FAAST Education logo"
+                width={56}
+                height={56}
+                priority
+                className="object-contain rounded-md"
+              />
+              <span className="text-2xl font-bold text-primary">FAAST Education</span>
+            </a>
+
+            {/* Desktop Menu */}
+            <div className="hidden md:flex gap-8 items-center">
+              {navItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="text-foreground font-medium hover:text-primary transition-colors"
+                >
+                  {item.label}
+                </a>
+              ))}
+              <ThemeToggle />
               <a
-                key={item.label}
-                href={item.href}
-                className="block px-4 py-2 text-primary hover:bg-muted rounded-lg transition-colors"
+                href="/contact"
+                className="bg-accent text-accent-foreground px-6 py-2.5 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+              >
+                Enroll Now
+              </a>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden flex items-center gap-2">
+              <ThemeToggle />
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="text-primary"
+                aria-label="Toggle menu"
+              >
+                {isOpen ? <X size={28} /> : <Menu size={28} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Menu */}
+          {isOpen && (
+            <div className="md:hidden pb-4 space-y-1 border-t border-border pt-3">
+              {navItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="block px-4 py-2 text-foreground hover:bg-muted rounded-lg transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.label}
+                </a>
+              ))}
+              <a
+                href="/contact"
+                className="block w-full bg-accent text-accent-foreground px-4 py-2 rounded-lg font-semibold text-center mt-2"
                 onClick={() => setIsOpen(false)}
               >
-                {item.label}
+                Enroll Now
               </a>
-            ))}
-            <a
-              href="/contact"
-              className="block w-full bg-accent text-primary px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition-shadow text-center"
-              onClick={() => setIsOpen(false)}
-            >
-              Enroll Now
-            </a>
-          </motion.div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
-    </motion.nav>
+    </nav>
   )
 }

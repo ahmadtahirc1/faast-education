@@ -1,16 +1,34 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { GraduationCap } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import WhatsAppButton from '@/components/whatsapp-button'
 
+type FounderContent = {
+  founderImage?: string
+}
+
 export default function FounderPage() {
+  const [content, setContent] = useState<FounderContent>({})
+  const [founderImageFailed, setFounderImageFailed] = useState(false)
+
+  useEffect(() => {
+    fetch('/api/site-content')
+      .then((res) => res.json())
+      .then((data) => setContent(data))
+      .catch(() => undefined)
+  }, [])
+
+  const founderImage = !founderImageFailed ? content.founderImage : undefined
+
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
-      <section className="pt-28 pb-20">
+      <section className="pt-20 sm:pt-[116px] pb-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -20,13 +38,20 @@ export default function FounderPage() {
           >
             <div className="grid md:grid-cols-[220px_1fr] gap-8 items-center">
               <div className="flex justify-center md:justify-start">
-                <Image
-                  src="/rizwan razi.jpeg"
-                  alt="Sir Rizwan Razi"
-                  width={220}
-                  height={220}
-                  className="rounded-full object-cover border-4 border-accent/20 shadow-md"
-                />
+                {founderImage ? (
+                  <Image
+                    src={founderImage}
+                    alt="Sir Rizwan Razi"
+                    width={220}
+                    height={220}
+                    className="rounded-full object-cover border-4 border-accent/20 shadow-md"
+                    onError={() => setFounderImageFailed(true)}
+                  />
+                ) : (
+                  <div className="w-[220px] h-[220px] rounded-full border-4 border-accent/20 shadow-md bg-muted flex items-center justify-center">
+                    <GraduationCap className="w-16 h-16 text-muted-foreground" />
+                  </div>
+                )}
               </div>
 
               <div>
@@ -43,9 +68,9 @@ export default function FounderPage() {
                   Under his guidance, FAAST Education grew with a clear mission: to teach with purpose, to build confidence, and to transform students into achievers who can change the world.
                 </p>
                 <div className="rounded-2xl bg-primary/10 border border-primary/20 p-5">
-                  <p className="text-primary font-bold text-lg mb-2">Founder’s Message</p>
+                  <p className="text-primary font-bold text-lg mb-2">Founder's Message</p>
                   <p className="text-foreground/75 leading-relaxed">
-                    “Education is not just about marks. It is about building character, developing thinking, and creating a generation that can innovate, serve, and lead. <span className="font-semibold text-primary">Win is his identification.</span> Every FAASTian carries that belief forward.”
+                    "Education is not just about marks. It is about building character, developing thinking, and creating a generation that can innovate, serve, and lead. <span className="font-semibold text-primary">Win is his identification.</span> Every FAASTian carries that belief forward."
                   </p>
                 </div>
               </div>

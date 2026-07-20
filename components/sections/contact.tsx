@@ -208,13 +208,13 @@ export default function Contact() {
 
             <motion.button
               type="submit"
-              className="w-full bg-accent text-primary py-3 rounded-lg font-bold hover:shadow-lg transition-shadow flex items-center justify-center gap-2"
+              className="w-full bg-accent text-accent-foreground py-3 rounded-lg font-bold hover:shadow-lg transition-shadow flex items-center justify-center gap-2"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               disabled={submitted}
             >
               {submitted ? (
-                <span>✅ Message Sent! We will contact you shortly.</span>
+                <span>Message Sent! We will contact you shortly.</span>
               ) : (
                 <>
                   <Send size={18} />
@@ -234,7 +234,9 @@ export default function Contact() {
         >
           <div className="bg-card p-6 flex flex-col md:flex-row items-center gap-4 justify-between">
             <div>
-              <h4 className="font-bold text-primary text-lg mb-1">📍 Our Location</h4>
+              <h4 className="flex items-center gap-2 font-bold text-primary text-lg mb-1">
+                <MapPin className="w-5 h-5" /> Our Location
+              </h4>
               <p className="text-foreground/70 text-sm">13-C Ali Tower, Jaranwala Road, Near RCG Plaza, Faisalabad, Punjab, Pakistan</p>
             </div>
             <a

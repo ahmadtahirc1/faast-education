@@ -124,7 +124,7 @@ export default function FAQ() {
             </motion.a>
             <motion.a
               href="tel:+923418576000"
-              className="bg-accent text-primary px-8 py-3 rounded-lg font-bold hover:shadow-lg transition-shadow inline-flex items-center justify-center gap-2"
+              className="bg-accent text-accent-foreground px-8 py-3 rounded-lg font-bold hover:shadow-lg transition-shadow inline-flex items-center justify-center gap-2"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

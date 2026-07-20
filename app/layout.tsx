@@ -1,11 +1,15 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
+import { Inter, Sora } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
 
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const sora = Sora({ subsets: ['latin'], variable: '--font-sora' })
+
 export const metadata: Metadata = {
   title: 'FAAST Education Faisalabad — Each one Teach one',
-  description: 'FAAST Education is Faisalabad\'s premier coaching institute offering Evening Coaching, MDCAT, NUST NET, NUMS, LUMS, FUNG, and NTS preparation. 100% recommended. Call: 03418576000',
+  description: 'FAAST Education is Faisalabad\'s premier coaching institute offering Evening Coaching, MDCAT, NUST NET, NUMS, LUMS, FUNG, and NTS preparation. Call: 03418576000',
   generator: 'v0.app',
   icons: {
     icon: [
@@ -29,8 +33,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#3B82F6' },
-    { media: '(prefers-color-scheme: dark)', color: '#0EA5E9' },
+    { media: '(prefers-color-scheme: light)', color: '#3730A3' },
+    { media: '(prefers-color-scheme: dark)', color: '#818CF8' },
   ],
 }
 
@@ -40,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sora.variable}`}>
       <body className="antialiased bg-background text-foreground transition-colors duration-300">
         <ThemeProvider>
           {children}

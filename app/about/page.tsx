@@ -9,7 +9,7 @@ export default function AboutPage() {
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
-      <div className="pt-24">
+      <div className="pt-20 sm:pt-[116px]">
         <About />
       </div>
       <Footer />

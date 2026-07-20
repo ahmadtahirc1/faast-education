@@ -12,7 +12,6 @@ export default function Testimonials() {
       name: 'Ahmad Raza',
       role: 'MDCAT Top Scorer',
       company: 'Now at King Edward Medical University',
-      image: '🎓',
       text: 'FAAST Education \'s MDCAT preparation program was exceptional. The faculty\'s dedication and daily mock tests helped me achieve my dream score. I am now studying at KEMU — something I only imagined possible because of FAAST.',
       rating: 5,
     },
@@ -20,7 +19,6 @@ export default function Testimonials() {
       name: 'Sara Tariq',
       role: 'NUST NET Qualifier',
       company: 'Now at NUST Islamabad — Mechanical Engineering',
-      image: '👩‍🎓',
       text: 'The NET Sessions at FAAST Education  are unlike anything else in Faisalabad. The teachers know exactly what NUST looks for. Their mock tests and IQ preparation made me confident on test day.',
       rating: 5,
     },
@@ -28,7 +26,6 @@ export default function Testimonials() {
       name: 'Hassan Ali',
       role: 'Intermediate Topper',
       company: 'Faisalabad Board — 1st Position Holder',
-      image: '🏆',
       text: 'The evening coaching at FAAST gave me the structured preparation I needed. Small batch sizes meant the teacher always knew how I was doing. I topped the board — and it would not have been possible without this Education .',
       rating: 5,
     },
@@ -36,7 +33,6 @@ export default function Testimonials() {
       name: 'Fatima Malik',
       role: 'NUMS Qualifier',
       company: 'Now at Army Medical College, Rawalpindi',
-      image: '👩‍⚕️',
       text: 'The NUMS preparation at FAAST was highly focused and relevant. The faculty addressed every question pattern specific to the NUMS test. I qualified in my first attempt and secured a seat at AMC.',
       rating: 5,
     },
@@ -44,7 +40,6 @@ export default function Testimonials() {
       name: 'Bilal Hussain',
       role: 'FUNG Qualifier',
       company: 'FAST-NUCES Faisalabad — Computer Science',
-      image: '💻',
       text: 'FAAST Education \'s FUNG preparation is amazing. The Math sessions are very advanced and the IQ practice sets are spot on. I got into FAST-NUCES Faisalabad campus — my first choice!',
       rating: 5,
     },
@@ -103,7 +98,12 @@ export default function Testimonials() {
 
                 {/* Author */}
                 <div className="mb-2">
-                  <div className="text-5xl mb-3">{testimonials[currentIndex].image}</div>
+                  <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground">
+                    {testimonials[currentIndex].name
+                      .split(' ')
+                      .map((part) => part[0])
+                      .join('')}
+                  </div>
                   <h4 className="text-xl font-bold text-primary">
                     {testimonials[currentIndex].name}
                   </h4>
@@ -122,7 +122,7 @@ export default function Testimonials() {
           <div className="flex justify-center gap-4 mt-8">
             <motion.button
               onClick={prevTestimonial}
-              className="p-3 bg-accent text-primary rounded-full hover:shadow-lg transition-shadow"
+              className="p-3 bg-accent text-accent-foreground rounded-full hover:shadow-lg transition-shadow"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -130,7 +130,7 @@ export default function Testimonials() {
             </motion.button>
             <motion.button
               onClick={nextTestimonial}
-              className="p-3 bg-accent text-primary rounded-full hover:shadow-lg transition-shadow"
+              className="p-3 bg-accent text-accent-foreground rounded-full hover:shadow-lg transition-shadow"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -167,7 +167,7 @@ export default function Testimonials() {
             href="https://wa.me/923418576000?text=Hi%2C%20I%20want%20to%20enroll%20at%20FAAST%20Education ."
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-accent text-primary px-8 py-3 rounded-lg font-bold hover:shadow-lg transition-shadow inline-block"
+            className="bg-accent text-accent-foreground px-8 py-3 rounded-lg font-bold hover:shadow-lg transition-shadow inline-block"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

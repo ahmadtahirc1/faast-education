@@ -16,6 +16,7 @@ export type SiteContent = {
   whatsapp: string
   description: string
   heroBackground?: string
+  founderImage?: string
   announcement?: {
     enabled: boolean
     title: string

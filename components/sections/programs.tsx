@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import {
   Moon, Target, Cpu, Heart, Code, FileText, GraduationCap, Stethoscope,
-  Clock, Users, BookOpen, ChevronDown, ChevronUp
+  Clock, Users, BookOpen, ChevronDown, ChevronUp, Landmark, Calendar, Phone, ArrowRight
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
@@ -83,7 +83,7 @@ export default function Programs() {
                       onError={() => setFailedImages((prev) => new Set(prev).add(program.id))}
                     />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/40 to-transparent" />
+                  <div className="absolute inset-0 bg-primary/50" />
                   {program.badge && (
                     <span className={`absolute top-3 right-3 ${program.badgeColor ?? 'bg-primary'} text-white text-xs font-bold px-2 py-1 rounded-full`}>
                       {program.badge}
@@ -137,18 +137,25 @@ export default function Programs() {
                         </li>
                       ))}
                       {program.university && (
-                        <li className="text-xs text-primary font-semibold mt-2 pt-2 border-t border-border">
-                          🏫 {program.university}
+                        <li className="flex items-center gap-1.5 text-xs text-primary font-semibold mt-2 pt-2 border-t border-border">
+                          <Landmark className="w-3.5 h-3.5 flex-shrink-0" /> {program.university}
                         </li>
                       )}
                     </motion.ul>
                   )}
 
+                  <a
+                    href={`/programs/${program.id}`}
+                    className="flex items-center justify-center gap-1.5 w-full border border-primary text-primary font-semibold py-2 rounded-lg hover:bg-primary/5 transition-colors text-sm text-center mb-2"
+                  >
+                    View Full Details <ArrowRight className="w-3.5 h-3.5" />
+                  </a>
+
                   <motion.a
                     href={`https://wa.me/923418576000?text=${encodeURIComponent(`Hi, I am interested in ${program.name} at FAAST Education . Please share details.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full bg-accent text-primary font-bold py-2.5 rounded-lg hover:shadow-lg transition-shadow text-sm text-center block"
+                    className="w-full bg-accent text-accent-foreground font-bold py-2.5 rounded-lg hover:shadow-lg transition-shadow text-sm text-center block"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -166,7 +173,9 @@ export default function Programs() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h3 className="text-2xl font-bold mb-2">📅 Flexible Batch Timings</h3>
+          <h3 className="flex items-center justify-center gap-2 text-2xl font-bold mb-2">
+            <Calendar className="w-6 h-6" /> Flexible Batch Timings
+          </h3>
           <p className="text-white/80 mb-6 max-w-xl mx-auto">
             Morning and Evening batches available for all programs. New batches starting every month.
           </p>
@@ -182,8 +191,8 @@ export default function Programs() {
               </div>
             ))}
           </div>
-          <p className="mt-6 text-white/70 text-sm">
-            📞 Call us at <a href="tel:+923418576000" className="text-accent font-bold hover:underline">03418576000</a> to book your seat
+          <p className="mt-6 flex items-center justify-center gap-1.5 text-white/70 text-sm">
+            <Phone className="w-4 h-4" /> Call us at <a href="tel:+923418576000" className="text-accent font-bold hover:underline">03418576000</a> to book your seat
           </p>
         </motion.div>
       </div>

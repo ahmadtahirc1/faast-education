@@ -43,7 +43,7 @@ export default function Hero() {
           src={heroImage as string}
           alt="FAAST Education Faisalabad"
           fill
-          className="object-cover absolute inset-0"
+          className="object-contain sm:object-cover absolute inset-0"
           priority
           onError={() => setHeroImageFailed(true)}
         />
@@ -114,7 +114,7 @@ export default function Hero() {
             Enroll via WhatsApp
           </motion.a>
           <motion.a
-            href="#programs"
+            href="/programs"
             className="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/10 transition-all inline-block"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

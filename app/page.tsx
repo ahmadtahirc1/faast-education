@@ -3,8 +3,6 @@
 import Navbar from '@/components/navbar'
 import Hero from '@/components/sections/hero'
 import About from '@/components/sections/about'
-import Programs from '@/components/sections/programs'
-import Facilities from '@/components/sections/facilities'
 import Gallery from '@/components/sections/gallery'
 import Achievements from '@/components/sections/achievements'
 import Testimonials from '@/components/sections/testimonials'
@@ -19,8 +17,6 @@ export default function Page() {
       <Navbar />
       <Hero />
       <About />
-      <Programs />
-      <Facilities />
       <Gallery />
       <Achievements />
       <Testimonials />

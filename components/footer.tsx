@@ -32,22 +32,22 @@ export default function Footer() {
 
   const quickLinks = [
     { name: 'About Us', href: '#about' },
-    { name: 'Programs', href: '#programs' },
-    { name: 'Facilities', href: '#facilities' },
+    { name: 'Programs', href: '/programs' },
+    { name: 'Facilities', href: '/facilities' },
     { name: 'Achievements', href: '#achievements' },
     { name: 'FAQ', href: '#faq' },
     { name: 'Contact', href: '#contact' },
   ]
 
   const programs = [
-    { name: 'Evening Coaching', href: '#programs' },
-    { name: 'MDCAT Preparation', href: '#programs' },
-    { name: 'NUST NET Sessions', href: '#programs' },
-    { name: 'NUMS Preparation', href: '#programs' },
-    { name: 'FUNG (FAST-NUCES)', href: '#programs' },
-    { name: 'NTS Preparation', href: '#programs' },
-    { name: 'LUMS Preparation', href: '#programs' },
-    { name: 'Entry Test Prep', href: '#programs' },
+    { name: 'Evening Coaching', href: '/programs' },
+    { name: 'MDCAT Preparation', href: '/programs' },
+    { name: 'NUST NET Sessions', href: '/programs' },
+    { name: 'NUMS Preparation', href: '/programs' },
+    { name: 'FUNG (FAST-NUCES)', href: '/programs' },
+    { name: 'NTS Preparation', href: '/programs' },
+    { name: 'LUMS Preparation', href: '/programs' },
+    { name: 'Entry Test Prep', href: '/programs' },
   ]
 
   return (

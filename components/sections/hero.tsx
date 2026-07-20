@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { GraduationCap } from 'lucide-react'
 
 type HeroContent = {
   heroBackground?: string
@@ -49,7 +48,7 @@ export default function Hero() {
           onError={() => setHeroImageFailed(true)}
         />
       )}
-      <div className="absolute inset-0 bg-primary/65" />
+      <div className="absolute inset-0 bg-primary/75" />
 
       {announcement.enabled && !isAnnouncementDismissed && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-3 py-4">
@@ -103,17 +102,6 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          {/* Badge */}
-          <motion.div
-            className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6 text-white/90 text-sm font-medium"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.1 }}
-          >
-            <GraduationCap className="w-4 h-4 text-accent" />
-            Faisalabad&apos;s Coaching Institute for Board &amp; Entry Test Success
-          </motion.div>
-
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 leading-tight">
             FAAST Education
           </h1>
@@ -151,23 +139,6 @@ export default function Hero() {
           </motion.a>
         </motion.div>
 
-        {/* Program Quick Links */}
-        <motion.div
-          className="mt-14 flex flex-wrap justify-center gap-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-        >
-          {['MDCAT', 'NUST NET', 'NUMS', 'LUMS', 'FUNG', 'NTS', 'Evening Coaching'].map((prog) => (
-            <a
-              key={prog}
-              href="#programs"
-              className="text-xs bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-full px-3 py-1 transition-all"
-            >
-              {prog}
-            </a>
-          ))}
-        </motion.div>
       </div>
 
       {/* Scroll Indicator */}

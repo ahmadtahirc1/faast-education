@@ -53,7 +53,7 @@ export default function Navbar() {
               />
               <span
                 className="text-3xl md:text-4xl tracking-tight text-primary [text-shadow:1px_1px_0_rgba(0,0,0,0.12)]"
-                style={{ fontFamily: "'Algerian', 'Impact', 'Arial Black', sans-serif" }}
+                style={{ fontFamily: 'var(--font-logo)' }}
               >
                 FAAST
               </span>

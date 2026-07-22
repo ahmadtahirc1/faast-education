@@ -88,15 +88,17 @@ export default function Programs() {
                       onError={() => setFailedImages((prev) => new Set(prev).add(program.id))}
                     />
                   )}
-                  <div className="absolute inset-0 bg-primary/50" />
+                  {program.image && !failedImages.has(program.id) && (
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+                  )}
                   {program.badge && (
                     <span className={`absolute top-3 right-3 ${program.badgeColor ?? 'bg-primary'} text-white text-xs font-bold px-2 py-1 rounded-full`}>
                       {program.badge}
                     </span>
                   )}
                   <div className="absolute bottom-3 left-4">
-                    <div className="p-2 bg-white/20 backdrop-blur-sm rounded-lg">
-                      <Icon className="w-5 h-5 text-white" />
+                    <div className={`p-2 rounded-lg ${program.image && !failedImages.has(program.id) ? 'bg-white/20 backdrop-blur-sm' : 'bg-primary/10'}`}>
+                      <Icon className={`w-5 h-5 ${program.image && !failedImages.has(program.id) ? 'text-white' : 'text-primary'}`} />
                     </div>
                   </div>
                 </div>

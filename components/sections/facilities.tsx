@@ -76,9 +76,17 @@ export default function Facilities() {
                       onError={() => setFailedImages((prev) => new Set(prev).add(index))}
                     />
                   )}
-                  <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/60 transition-all"></div>
+                  {facility.image && !failedImages.has(index) && (
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-all"></div>
+                  )}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <Icon className="w-12 h-12 text-white group-hover:scale-125 transition-transform" />
+                    <Icon
+                      className={`w-12 h-12 group-hover:scale-125 transition-transform ${
+                        facility.image && !failedImages.has(index)
+                          ? 'text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]'
+                          : 'text-primary'
+                      }`}
+                    />
                   </div>
                 </div>
 

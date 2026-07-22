@@ -48,7 +48,7 @@ export default function Hero() {
           onError={() => setHeroImageFailed(true)}
         />
       )}
-      <div className="absolute inset-0 bg-primary/80" />
+      <div className="absolute inset-0 bg-primary/25" />
 
       {announcement.enabled && !isAnnouncementDismissed && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-3 py-4">

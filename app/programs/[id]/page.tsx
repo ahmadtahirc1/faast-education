@@ -70,13 +70,13 @@ export default async function ProgramDetailPage({
           {program.image && (
             <div className="absolute inset-0">
               <CourseBannerImage src={program.image} alt={program.name} />
-              <div className="absolute inset-0 bg-primary/70" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
             </div>
           )}
           <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 bg-white/10 rounded-lg">
-                <Icon className="w-7 h-7" />
+              <div className="p-3 bg-white/20 backdrop-blur-sm rounded-lg">
+                <Icon className="w-7 h-7 drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]" />
               </div>
               {program.badge && (
                 <span className={`${program.badgeColor ?? 'bg-accent'} text-white text-xs font-bold px-2.5 py-1 rounded-full`}>
@@ -84,8 +84,8 @@ export default async function ProgramDetailPage({
                 </span>
               )}
             </div>
-            <h1 className="text-3xl md:text-5xl font-bold mb-3">{program.name}</h1>
-            <p className="text-lg text-primary-foreground/85 max-w-2xl">{program.tagline}</p>
+            <h1 className="text-3xl md:text-5xl font-bold mb-3 drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]">{program.name}</h1>
+            <p className="text-lg text-primary-foreground/85 max-w-2xl drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">{program.tagline}</p>
           </div>
         </div>
 

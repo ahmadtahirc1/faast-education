@@ -40,14 +40,14 @@ export default function Footer() {
   ]
 
   const programs = [
-    { name: 'Evening Coaching', href: '/programs' },
-    { name: 'MDCAT Preparation', href: '/programs' },
-    { name: 'NUST NET Sessions', href: '/programs' },
-    { name: 'NUMS Preparation', href: '/programs' },
-    { name: 'FUNG (FAST-NUCES)', href: '/programs' },
-    { name: 'NTS Preparation', href: '/programs' },
-    { name: 'LUMS Preparation', href: '/programs' },
-    { name: 'Entry Test Prep', href: '/programs' },
+    { name: 'Evening Coaching', href: '/programs/evening-coaching' },
+    { name: 'MDCAT Preparation', href: '/programs/mdcat' },
+    { name: 'NUST NET Sessions', href: '/programs/net-nust' },
+    { name: 'NUMS Preparation', href: '/programs/nums' },
+    { name: 'FUNG (FAST-NUCES)', href: '/programs/fung' },
+    { name: 'NTS Preparation', href: '/programs/nts' },
+    { name: 'LUMS Preparation', href: '/programs/lums' },
+    { name: 'Entry Test Prep', href: '/programs/entry-test-prep' },
   ]
 
   return (

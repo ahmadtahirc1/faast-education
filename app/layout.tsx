@@ -1,12 +1,11 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Inter, Sora, Rye } from 'next/font/google'
+import { Inter, Sora } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const sora = Sora({ subsets: ['latin'], variable: '--font-sora' })
-const rye = Rye({ subsets: ['latin'], weight: '400', variable: '--font-logo' })
 
 export const metadata: Metadata = {
   title: 'FAAST Education Faisalabad — Each one Teach one',
@@ -45,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sora.variable} ${rye.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${sora.variable}`}>
       <body className="antialiased bg-background text-foreground transition-colors duration-300">
         <ThemeProvider>
           {children}

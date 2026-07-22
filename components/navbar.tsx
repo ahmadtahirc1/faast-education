@@ -51,12 +51,22 @@ export default function Navbar() {
                 priority
                 className="object-contain rounded-md"
               />
-              <span
-                className="text-3xl md:text-4xl tracking-tight text-primary [text-shadow:1px_1px_0_rgba(0,0,0,0.12)]"
-                style={{ fontFamily: 'var(--font-logo)' }}
-              >
-                FAAST
-              </span>
+              <Image
+                src="/faast-logotype-light.png"
+                alt="FAAST"
+                width={752}
+                height={260}
+                priority
+                className="h-9 md:h-11 w-auto block dark:hidden"
+              />
+              <Image
+                src="/faast-logotype-dark.png"
+                alt="FAAST"
+                width={753}
+                height={260}
+                priority
+                className="h-9 md:h-11 w-auto hidden dark:block"
+              />
             </a>
 
             {/* Desktop Menu */}

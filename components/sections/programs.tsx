@@ -28,6 +28,11 @@ type ProgramItem = {
   badge?: string
   badgeColor?: string
   university?: string
+  subCourses?: Array<{
+    name: string
+    duration: string
+    description: string
+  }>
 }
 
 export default function Programs() {
@@ -52,10 +57,10 @@ export default function Programs() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-            Our Programs
+            Our Courses
           </h2>
           <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
-            From evening coaching to top university entry tests — FAAST Education has a program for every student.
+            From evening coaching to top university entry tests — FAAST Education has a course for every student.
           </p>
         </motion.div>
 
@@ -117,7 +122,7 @@ export default function Programs() {
                     className="flex items-center justify-between w-full text-sm font-semibold text-primary hover:text-accent transition-colors mb-2"
                   >
                     <span className="flex items-center gap-1">
-                      <BookOpen className="w-4 h-4" /> Program Details
+                      <BookOpen className="w-4 h-4" /> Course Details
                     </span>
                     {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </button>
@@ -142,6 +147,27 @@ export default function Programs() {
                         </li>
                       )}
                     </motion.ul>
+                  )}
+
+                  {isExpanded && program.subCourses && program.subCourses.length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="mb-3 space-y-2 border-t border-border pt-3"
+                    >
+                      <div className="text-xs font-bold text-primary uppercase tracking-wide">Batches Offered</div>
+                      {program.subCourses.map((sub, i) => (
+                        <div key={i} className="bg-muted rounded-lg p-2.5">
+                          <div className="flex items-baseline justify-between gap-2">
+                            <span className="text-xs font-bold text-primary">{sub.name}</span>
+                            <span className="text-[10px] text-foreground/60 flex-shrink-0">{sub.duration}</span>
+                          </div>
+                          <p className="text-[11px] text-foreground/70 mt-1 leading-relaxed">{sub.description}</p>
+                        </div>
+                      ))}
+                    </motion.div>
                   )}
 
                   <a
@@ -177,7 +203,7 @@ export default function Programs() {
             <Calendar className="w-6 h-6" /> Flexible Batch Timings
           </h3>
           <p className="text-white/80 mb-6 max-w-xl mx-auto">
-            Morning and Evening batches available for all programs. New batches starting every month.
+            Morning and Evening batches available for all courses. New batches starting every month.
           </p>
           <div className="flex flex-wrap justify-center gap-6 text-sm">
             {[

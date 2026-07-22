@@ -179,7 +179,7 @@ export default function Contact() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-primary mb-2">Program of Interest *</label>
+              <label className="block text-sm font-medium text-primary mb-2">Course of Interest *</label>
               <select
                 name="program"
                 value={formData.program}
@@ -187,7 +187,7 @@ export default function Contact() {
                 required
                 className="w-full px-4 py-3 bg-card border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent text-foreground"
               >
-                <option value="">— Select a Program —</option>
+                <option value="">— Select a Course —</option>
                 {programs.map((prog) => (
                   <option key={prog} value={prog}>{prog}</option>
                 ))}

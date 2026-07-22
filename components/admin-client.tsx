@@ -121,7 +121,7 @@ export default function AdminClient() {
       const next = [...(content.programs ?? [])]
       next[index] = { ...next[index], image: uploaded.url }
       nextContent = { ...content, programs: next }
-      label = 'Program image'
+      label = 'Course image'
     } else if (type === 'gallery') {
       const next = [...(content.galleryImages ?? [])]
       next[index] = { ...next[index], src: uploaded.url }
@@ -157,7 +157,7 @@ export default function AdminClient() {
         ...(prev.programs ?? []),
         {
           id: `program-${Date.now()}`,
-          name: 'New Program',
+          name: 'New Course',
           shortName: 'New',
           icon: 'Target',
           tagline: 'Add a short tagline',
@@ -237,7 +237,7 @@ export default function AdminClient() {
 
         <section className="grid gap-4 md:grid-cols-4">
           <div className="rounded-2xl border border-white/10 bg-slate-900 p-5">
-            <div className="text-sm text-slate-400">Programs</div>
+            <div className="text-sm text-slate-400">Courses</div>
             <div className="mt-2 text-3xl font-bold">{programCount}</div>
           </div>
           <div className="rounded-2xl border border-white/10 bg-slate-900 p-5">
@@ -499,12 +499,12 @@ export default function AdminClient() {
 
         <section className="rounded-2xl border border-white/10 bg-slate-900 p-6">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-2xl font-semibold">Programs</h2>
+            <h2 className="text-2xl font-semibold">Courses</h2>
             <button
               onClick={addProgram}
               className="rounded-lg border border-blue-400 px-3 py-2 text-sm text-blue-300"
             >
-              Add Program
+              Add Course
             </button>
           </div>
 
@@ -513,7 +513,7 @@ export default function AdminClient() {
               <div key={program.id} className="rounded-xl border border-white/10 bg-slate-800 p-4">
                 <div className="grid gap-3 md:grid-cols-2">
                   <label className="space-y-1">
-                    <span className="text-sm text-slate-300">Program Name</span>
+                    <span className="text-sm text-slate-300">Course Name</span>
                     <input
                       value={program.name}
                       onChange={(e) => {

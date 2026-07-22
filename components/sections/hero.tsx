@@ -37,13 +37,13 @@ export default function Hero() {
   }
 
   return (
-    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden pt-20 sm:pt-[116px] bg-primary">
+    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden pt-28 sm:pt-[156px] bg-primary">
       {heroImage && (
         <Image
           src={heroImage as string}
           alt="FAAST Education Faisalabad"
           fill
-          className="object-contain sm:object-cover absolute inset-0"
+          className="object-cover absolute inset-0"
           priority
           onError={() => setHeroImageFailed(true)}
         />
@@ -111,7 +111,7 @@ export default function Hero() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Enroll via WhatsApp
+            Apply Now
           </motion.a>
           <motion.a
             href="/programs"
@@ -119,7 +119,7 @@ export default function Hero() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            View Programs
+            View Courses
           </motion.a>
         </motion.div>
 

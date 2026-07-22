@@ -42,6 +42,11 @@ export type SiteContent = {
     badge?: string
     badgeColor?: string
     university?: string
+    subCourses?: Array<{
+      name: string
+      duration: string
+      description: string
+    }>
   }>
   achievements: {
     rating: string

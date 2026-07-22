@@ -11,7 +11,7 @@ export default function Navbar() {
   const navItems = [
     { label: 'Home', href: '/' },
     { label: 'About', href: '/about' },
-    { label: 'Programs', href: '/programs' },
+    { label: 'Courses', href: '/programs' },
     { label: 'Facilities', href: '/facilities' },
     { label: 'Founder', href: '/founder' },
     { label: 'Contact', href: '/contact' },
@@ -21,7 +21,7 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50">
       {/* Utility bar */}
       <div className="hidden sm:block bg-primary text-primary-foreground">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-end gap-6 text-xs font-medium">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-11 flex items-center justify-end gap-6 text-sm font-medium">
           <a href="tel:+923418576000" className="flex items-center gap-1.5 hover:text-accent transition-colors">
             <Phone className="w-3.5 h-3.5" />
             03418576000
@@ -41,17 +41,19 @@ export default function Navbar() {
       {/* Main nav */}
       <div className="bg-background border-b border-border shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <a href="/" className="flex items-center gap-3">
+          <div className="flex justify-between items-center h-28">
+            <a href="/" className="flex items-center gap-4">
               <Image
                 src="/faast logo.jpeg"
                 alt="FAAST Education logo"
-                width={56}
-                height={56}
+                width={72}
+                height={72}
                 priority
                 className="object-contain rounded-md"
               />
-              <span className="text-2xl font-bold text-primary">FAAST Education</span>
+              <span className="font-serif font-black text-3xl md:text-4xl tracking-tight text-primary [text-shadow:1px_1px_0_rgba(0,0,0,0.12)]">
+                FAAST
+              </span>
             </a>
 
             {/* Desktop Menu */}

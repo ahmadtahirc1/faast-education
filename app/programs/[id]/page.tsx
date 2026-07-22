@@ -7,6 +7,7 @@ import {
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import WhatsAppButton from '@/components/whatsapp-button'
+import { CourseBannerImage } from '@/components/course-banner-image'
 import { getSiteContent } from '@/lib/site-content'
 
 const iconMap: Record<string, React.ElementType> = {
@@ -22,7 +23,7 @@ export async function generateMetadata({
   const content = await getSiteContent()
   const program = content.programs.find((p) => p.id === id)
 
-  if (!program) return { title: 'Program Not Found — FAAST Education' }
+  if (!program) return { title: 'Course Not Found — FAAST Education' }
 
   return {
     title: `${program.name} — FAAST Education Faisalabad`,
@@ -52,21 +53,27 @@ export default async function ProgramDetailPage({
     <main className="min-h-screen bg-background">
       <Navbar />
 
-      <div className="pt-20 sm:pt-[116px]">
+      <div className="pt-28 sm:pt-[156px]">
         {/* Breadcrumb */}
         <div className="border-b border-border bg-card">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center gap-1.5 text-sm text-foreground/60">
             <a href="/" className="hover:text-primary transition-colors">Home</a>
             <ChevronRight className="w-3.5 h-3.5" />
-            <a href="/programs" className="hover:text-primary transition-colors">Programs</a>
+            <a href="/programs" className="hover:text-primary transition-colors">Courses</a>
             <ChevronRight className="w-3.5 h-3.5" />
             <span className="text-foreground font-medium">{program.name}</span>
           </div>
         </div>
 
         {/* Title band */}
-        <div className="bg-primary text-primary-foreground">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="relative bg-primary text-primary-foreground overflow-hidden">
+          {program.image && (
+            <div className="absolute inset-0">
+              <CourseBannerImage src={program.image} alt={program.name} />
+              <div className="absolute inset-0 bg-primary/70" />
+            </div>
+          )}
+          <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-3 bg-white/10 rounded-lg">
                 <Icon className="w-7 h-7" />
@@ -134,6 +141,26 @@ export default async function ProgramDetailPage({
             </ul>
           </section>
 
+          {/* Batches Offered */}
+          {program.subCourses && program.subCourses.length > 0 && (
+            <section className="mb-12">
+              <h2 className="text-2xl font-bold text-primary mb-4 flex items-center gap-2">
+                <Users className="w-6 h-6" /> Batches Offered
+              </h2>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {program.subCourses.map((sub, i) => (
+                  <div key={i} className="bg-card border border-border rounded-xl p-5">
+                    <div className="flex items-baseline justify-between gap-2 mb-2">
+                      <h3 className="font-bold text-primary">{sub.name}</h3>
+                      <span className="text-xs text-foreground/60 flex-shrink-0">{sub.duration}</span>
+                    </div>
+                    <p className="text-sm text-foreground/75 leading-relaxed">{sub.description}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
           {/* CTA */}
           <section className="mb-12 bg-primary rounded-2xl p-8 text-center text-primary-foreground">
             <h3 className="text-2xl font-bold mb-2">Ready to enroll in {program.name}?</h3>
@@ -147,7 +174,7 @@ export default async function ProgramDetailPage({
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 bg-accent text-accent-foreground px-6 py-3 rounded-lg font-bold hover:opacity-90 transition-opacity"
               >
-                <MessageCircle className="w-5 h-5" /> Enroll via WhatsApp
+                <MessageCircle className="w-5 h-5" /> Apply Now
               </a>
               <a
                 href="tel:+923418576000"
@@ -161,7 +188,7 @@ export default async function ProgramDetailPage({
           {/* Other programs */}
           {otherPrograms.length > 0 && (
             <section>
-              <h2 className="text-2xl font-bold text-primary mb-4">Other Programs</h2>
+              <h2 className="text-2xl font-bold text-primary mb-4">Other Courses</h2>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {otherPrograms.map((other) => {
                   const OtherIcon = iconMap[other.icon] ?? Target

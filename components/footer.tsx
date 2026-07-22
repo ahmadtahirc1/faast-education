@@ -32,7 +32,7 @@ export default function Footer() {
 
   const quickLinks = [
     { name: 'About Us', href: '#about' },
-    { name: 'Programs', href: '/programs' },
+    { name: 'Courses', href: '/programs' },
     { name: 'Facilities', href: '/facilities' },
     { name: 'Achievements', href: '#achievements' },
     { name: 'FAQ', href: '#faq' },
@@ -117,13 +117,13 @@ export default function Footer() {
             </ul>
           </motion.div>
 
-          {/* Programs */}
+          {/* Courses */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            <h3 className="font-bold text-lg mb-4">Our Programs</h3>
+            <h3 className="font-bold text-lg mb-4">Our Courses</h3>
             <ul className="space-y-2">
               {programs.map((link, index) => (
                 <li key={index}>

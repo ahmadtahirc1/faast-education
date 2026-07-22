@@ -28,7 +28,7 @@ export default function FounderPage() {
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
-      <section className="pt-20 sm:pt-[116px] pb-20">
+      <section className="pt-28 sm:pt-[156px] pb-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

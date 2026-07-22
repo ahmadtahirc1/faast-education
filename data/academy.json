@@ -34,7 +34,7 @@
         "Matric (9th & 10th) all subjects coaching",
         "Intermediate (FSc Pre-Medical & Pre-Engineering) coaching",
         "Experienced subject specialists for each subject",
-        "Regular tests and detailed performance reports",
+        "Regular MCQ-based class tests and full-book tests with detailed performance reports",
         "Doubt-clearing sessions after every class",
         "Past papers and exam strategy workshops",
         "Monthly position holders recognized and rewarded",
@@ -44,7 +44,44 @@
       "timing": "4:00 PM – 9:00 PM",
       "level": "Matric & Intermediate",
       "color": "primary",
-      "image": "/uploads/1784282195312-faast_logo.jpeg"
+      "image": "/uploads/1784282195312-faast_logo.jpeg",
+      "subCourses": [
+        {
+          "name": "Pre-9th",
+          "duration": "6 Months",
+          "description": "An early-start batch covering more than half of the actual 9th grade syllabus in advance, with regular tests throughout the tenure — including MCQ-based tests and full-book tests — so students begin 9th grade already ahead."
+        },
+        {
+          "name": "9th (Matric Part 1)",
+          "duration": "Full Academic Year",
+          "description": "Complete 9th grade syllabus coverage across all subjects, with regular MCQ-based class tests and full-book tests before major exams to build strong board-exam foundations."
+        },
+        {
+          "name": "10th (Matric Part 2)",
+          "duration": "Full Academic Year",
+          "description": "Complete 10th grade syllabus with board-exam focused preparation, regular MCQ-based tests, and full-book tests to ensure students are fully prepared for their Matric board exams."
+        },
+        {
+          "name": "Pre-1st Year",
+          "duration": "6 Months",
+          "description": "An early-start batch for students moving into Intermediate, covering more than half of the 1st year syllabus in advance with regular MCQ-based tests and full-book tests."
+        },
+        {
+          "name": "1st Year (Intermediate Part 1)",
+          "duration": "Full Academic Year",
+          "description": "Complete FSc Part 1 (Pre-Medical / Pre-Engineering) syllabus coverage with regular MCQ-based tests and full-book tests throughout the year."
+        },
+        {
+          "name": "2nd Year (Intermediate Part 2)",
+          "duration": "Full Academic Year",
+          "description": "Complete FSc Part 2 syllabus with board-exam focused preparation, regular MCQ-based tests, and full-book tests to maximize board exam results."
+        },
+        {
+          "name": "Repeater Section",
+          "duration": "3 – 6 Months",
+          "description": "A focused batch for students repeating or improving a previous attempt, with intensive revision, regular MCQ-based tests, and full-book tests targeting weak areas for a stronger result."
+        }
+      ]
     },
     {
       "id": "entry-test-prep",

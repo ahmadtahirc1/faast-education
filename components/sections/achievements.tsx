@@ -22,7 +22,7 @@ export default function Achievements() {
     },
     {
       icon: BookOpen,
-      title: 'Multiple Programs, One Campus',
+      title: 'Multiple Courses, One Campus',
       description: 'From Matric evening coaching to MDCAT, NUST NET, NUMS, LUMS, FUNG and NTS — all under one roof.',
     },
   ]

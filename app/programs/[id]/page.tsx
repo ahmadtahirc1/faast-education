@@ -66,14 +66,14 @@ export default async function ProgramDetailPage({
         </div>
 
         {/* Title band */}
-        <div className="relative bg-primary text-primary-foreground overflow-hidden">
+        <div className={`relative bg-primary text-primary-foreground overflow-hidden ${program.image ? 'min-h-[320px] sm:min-h-[400px] flex items-center' : ''}`}>
           {program.image && (
             <div className="absolute inset-0">
               <CourseBannerImage src={program.image} alt={program.name} />
               <div className="absolute inset-0 bg-primary/70" />
             </div>
           )}
-          <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-3 bg-white/10 rounded-lg">
                 <Icon className="w-7 h-7" />

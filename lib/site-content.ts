@@ -78,21 +78,37 @@ async function readBundledDefault(): Promise<SiteContent> {
   return JSON.parse(raw) as SiteContent
 }
 
+// Saved content in Blob can predate fields added to the bundled defaults
+// since (e.g. a new program field with no admin UI yet) - backfill any
+// missing field per-program, matched by id, rather than losing it silently.
+function backfillFromBundledDefaults(remote: SiteContent, bundled: SiteContent): SiteContent {
+  const bundledProgramsById = new Map(bundled.programs.map((program) => [program.id, program]))
+
+  const programs = remote.programs.map((program) => {
+    const defaults = bundledProgramsById.get(program.id)
+    return defaults ? { ...defaults, ...program } : program
+  })
+
+  return { ...bundled, ...remote, programs }
+}
+
 export async function getSiteContent(): Promise<SiteContent> {
-  if (!BLOB_TOKEN) return readBundledDefault()
+  const bundled = await readBundledDefault()
+  if (!BLOB_TOKEN) return bundled
 
   try {
     const { blobs } = await list({ prefix: BLOB_PATHNAME, token: BLOB_TOKEN, limit: 1 })
     const match = blobs.find((blob) => blob.pathname === BLOB_PATHNAME)
-    if (!match) return readBundledDefault()
+    if (!match) return bundled
 
     const response = await fetch(`${match.url}?v=${Date.now()}`, { cache: 'no-store' })
-    if (!response.ok) return readBundledDefault()
+    if (!response.ok) return bundled
 
-    return (await response.json()) as SiteContent
+    const remote = (await response.json()) as SiteContent
+    return backfillFromBundledDefaults(remote, bundled)
   } catch (error) {
     console.error('Failed to load site content from Blob, falling back to bundled defaults:', error)
-    return readBundledDefault()
+    return bundled
   }
 }
 

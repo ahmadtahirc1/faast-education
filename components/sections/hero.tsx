@@ -37,30 +37,17 @@ export default function Hero() {
   }
 
   return (
-    <section id="hero" className="relative min-h-dvh flex items-center justify-center overflow-hidden pt-28 sm:pt-[156px] bg-primary">
+    <section id="hero" className="relative min-h-[480px] sm:min-h-[560px] flex items-center justify-center overflow-hidden pt-28 sm:pt-[156px] bg-primary">
       {heroImage && (
-        <>
-          {/* Blurred backdrop: fills every screen size/aspect ratio edge-to-edge, no letterboxing */}
-          <Image
-            src={heroImage as string}
-            alt=""
-            aria-hidden
-            fill
-            sizes="100vw"
-            className="object-cover scale-110 blur-2xl opacity-60"
-            priority
-          />
-          {/* Sharp foreground: always shows the full image, never cropped */}
-          <Image
-            src={heroImage as string}
-            alt="FAAST Education Faisalabad"
-            fill
-            sizes="100vw"
-            className="object-contain"
-            priority
-            onError={() => setHeroImageFailed(true)}
-          />
-        </>
+        <Image
+          src={heroImage as string}
+          alt="FAAST Education Faisalabad"
+          fill
+          sizes="100vw"
+          className="object-cover"
+          priority
+          onError={() => setHeroImageFailed(true)}
+        />
       )}
       <div className="absolute inset-0 bg-primary/25" />
 

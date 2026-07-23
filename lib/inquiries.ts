@@ -1,4 +1,4 @@
-import { list, put } from '@vercel/blob'
+import { getSupabaseServerClient } from './supabase'
 
 export type Inquiry = {
   id: string
@@ -10,61 +10,69 @@ export type Inquiry = {
   createdAt: string
 }
 
-const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN
-const BLOB_PATHNAME = 'inquiries.json'
-
-async function readInquiries(): Promise<Inquiry[]> {
-  if (!BLOB_TOKEN) return []
-
-  try {
-    const { blobs } = await list({ prefix: BLOB_PATHNAME, token: BLOB_TOKEN, limit: 1 })
-    const match = blobs.find((blob) => blob.pathname === BLOB_PATHNAME)
-    if (!match) return []
-
-    const response = await fetch(`${match.url}?v=${Date.now()}`, { cache: 'no-store' })
-    if (!response.ok) return []
-
-    return (await response.json()) as Inquiry[]
-  } catch (error) {
-    console.error('Failed to load inquiries from Blob:', error)
-    return []
-  }
+type InquiryRow = {
+  id: string
+  name: string
+  phone: string
+  email: string | null
+  program: string
+  message: string | null
+  created_at: string
 }
 
-async function writeInquiries(inquiries: Inquiry[]) {
-  if (!BLOB_TOKEN) {
-    throw new Error('Blob storage is not configured (missing BLOB_READ_WRITE_TOKEN).')
+function fromRow(row: InquiryRow): Inquiry {
+  return {
+    id: row.id,
+    name: row.name,
+    phone: row.phone,
+    email: row.email ?? undefined,
+    program: row.program,
+    message: row.message ?? undefined,
+    createdAt: row.created_at,
   }
-
-  await put(BLOB_PATHNAME, JSON.stringify(inquiries, null, 2), {
-    access: 'public',
-    token: BLOB_TOKEN,
-    contentType: 'application/json',
-    addRandomSuffix: false,
-    allowOverwrite: true,
-    cacheControlMaxAge: 0,
-  })
 }
 
 export async function getInquiries(): Promise<Inquiry[]> {
-  const inquiries = await readInquiries()
-  return inquiries.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+  const supabase = getSupabaseServerClient()
+  if (!supabase) return []
+
+  const { data, error } = await supabase
+    .from('inquiries')
+    .select('*')
+    .order('created_at', { ascending: false })
+
+  if (error || !data) return []
+  return (data as InquiryRow[]).map(fromRow)
 }
 
 export async function addInquiry(entry: Omit<Inquiry, 'id' | 'createdAt'>): Promise<Inquiry> {
-  const inquiries = await readInquiries()
-
-  const inquiry: Inquiry = {
-    ...entry,
-    id: `inq-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-    createdAt: new Date().toISOString(),
+  const supabase = getSupabaseServerClient()
+  if (!supabase) {
+    throw new Error('Supabase is not configured (missing SUPABASE_URL/SUPABASE_SECRET_KEY).')
   }
 
-  await writeInquiries([...inquiries, inquiry])
-  return inquiry
+  const { data, error } = await supabase
+    .from('inquiries')
+    .insert({
+      name: entry.name,
+      phone: entry.phone,
+      email: entry.email ?? null,
+      program: entry.program,
+      message: entry.message ?? null,
+    })
+    .select()
+    .single()
+
+  if (error || !data) throw new Error(error?.message ?? 'Failed to save inquiry')
+  return fromRow(data as InquiryRow)
 }
 
 export async function deleteInquiry(id: string): Promise<void> {
-  const inquiries = await readInquiries()
-  await writeInquiries(inquiries.filter((inquiry) => inquiry.id !== id))
+  const supabase = getSupabaseServerClient()
+  if (!supabase) {
+    throw new Error('Supabase is not configured (missing SUPABASE_URL/SUPABASE_SECRET_KEY).')
+  }
+
+  const { error } = await supabase.from('inquiries').delete().eq('id', id)
+  if (error) throw new Error(error.message)
 }

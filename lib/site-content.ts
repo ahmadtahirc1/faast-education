@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs'
 import path from 'path'
-import { list, put } from '@vercel/blob'
+import { getSupabaseServerClient } from './supabase'
 
 export type SiteContent = {
   name: string
@@ -70,8 +70,6 @@ export type SiteContent = {
 }
 
 const contentPath = path.join(process.cwd(), 'data', 'academy.json')
-const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN
-const BLOB_PATHNAME = 'academy.json'
 
 async function readBundledDefault(): Promise<SiteContent> {
   const raw = await fs.readFile(contentPath, 'utf8')
@@ -94,35 +92,34 @@ function backfillFromBundledDefaults(remote: SiteContent, bundled: SiteContent):
 
 export async function getSiteContent(): Promise<SiteContent> {
   const bundled = await readBundledDefault()
-  if (!BLOB_TOKEN) return bundled
+  const supabase = getSupabaseServerClient()
+  if (!supabase) return bundled
 
   try {
-    const { blobs } = await list({ prefix: BLOB_PATHNAME, token: BLOB_TOKEN, limit: 1 })
-    const match = blobs.find((blob) => blob.pathname === BLOB_PATHNAME)
-    if (!match) return bundled
+    const { data, error } = await supabase
+      .from('site_content')
+      .select('data')
+      .eq('id', 1)
+      .maybeSingle()
 
-    const response = await fetch(`${match.url}?v=${Date.now()}`, { cache: 'no-store' })
-    if (!response.ok) return bundled
+    if (error || !data) return bundled
 
-    const remote = (await response.json()) as SiteContent
-    return backfillFromBundledDefaults(remote, bundled)
+    return backfillFromBundledDefaults(data.data as SiteContent, bundled)
   } catch (error) {
-    console.error('Failed to load site content from Blob, falling back to bundled defaults:', error)
+    console.error('Failed to load site content from Supabase, falling back to bundled defaults:', error)
     return bundled
   }
 }
 
 export async function saveSiteContent(content: SiteContent) {
-  if (!BLOB_TOKEN) {
-    throw new Error('Blob storage is not configured (missing BLOB_READ_WRITE_TOKEN).')
+  const supabase = getSupabaseServerClient()
+  if (!supabase) {
+    throw new Error('Supabase is not configured (missing SUPABASE_URL/SUPABASE_SECRET_KEY).')
   }
 
-  await put(BLOB_PATHNAME, JSON.stringify(content, null, 2), {
-    access: 'public',
-    token: BLOB_TOKEN,
-    contentType: 'application/json',
-    addRandomSuffix: false,
-    allowOverwrite: true,
-    cacheControlMaxAge: 0,
-  })
+  const { error } = await supabase
+    .from('site_content')
+    .upsert({ id: 1, data: content, updated_at: new Date().toISOString() })
+
+  if (error) throw new Error(error.message)
 }

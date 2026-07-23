@@ -105,8 +105,17 @@ export default function AdminClient() {
     type: 'program' | 'gallery' | 'hero' | 'announcement' | 'facility' | 'founder',
     index: number,
   ) => {
+    const slot =
+      type === 'hero' ? 'hero' :
+      type === 'founder' ? 'founder' :
+      type === 'announcement' ? 'announcement' :
+      type === 'program' ? `program-${content.programs?.[index]?.id ?? index}` :
+      type === 'facility' ? `facility-${index}` :
+      `gallery-${index}`
+
     const formData = new FormData()
     formData.append('file', file)
+    formData.append('slot', slot)
 
     const uploadRes = await fetch('/api/upload', {
       method: 'POST',

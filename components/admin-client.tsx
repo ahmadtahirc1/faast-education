@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
 import type { SiteContent } from '@/lib/site-content'
+import type { Inquiry } from '@/lib/inquiries'
 
 const defaultAnnouncement: NonNullable<SiteContent['announcement']> = {
   enabled: true,
@@ -48,6 +49,7 @@ export default function AdminClient() {
   const [content, setContent] = useState(defaultContent)
   const [status, setStatus] = useState('')
   const [isHydrated, setIsHydrated] = useState(false)
+  const [inquiries, setInquiries] = useState<Inquiry[]>([])
 
   useEffect(() => {
     fetch('/api/site-content')
@@ -57,7 +59,17 @@ export default function AdminClient() {
         setIsHydrated(true)
       })
       .catch(() => setIsHydrated(true))
+
+    fetch('/api/contact')
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => setInquiries(data))
+      .catch(() => setInquiries([]))
   }, [])
+
+  const deleteInquiry = async (id: string) => {
+    const res = await fetch(`/api/contact?id=${encodeURIComponent(id)}`, { method: 'DELETE' })
+    if (res.ok) setInquiries((prev) => prev.filter((inquiry) => inquiry.id !== id))
+  }
 
   const programCount = useMemo(() => content.programs?.length ?? 0, [content.programs])
   const facilityCount = useMemo(() => content.facilities?.length ?? 0, [content.facilities])
@@ -235,7 +247,11 @@ export default function AdminClient() {
           {status && <div className="mt-4 text-sm text-emerald-300">{status}</div>}
         </div>
 
-        <section className="grid gap-4 md:grid-cols-4">
+        <section className="grid gap-4 md:grid-cols-5">
+          <div className="rounded-2xl border border-white/10 bg-slate-900 p-5">
+            <div className="text-sm text-slate-400">Inquiries</div>
+            <div className="mt-2 text-3xl font-bold">{inquiries.length}</div>
+          </div>
           <div className="rounded-2xl border border-white/10 bg-slate-900 p-5">
             <div className="text-sm text-slate-400">Courses</div>
             <div className="mt-2 text-3xl font-bold">{programCount}</div>
@@ -252,6 +268,52 @@ export default function AdminClient() {
             <div className="text-sm text-slate-400">Status</div>
             <div className="mt-2 text-lg font-semibold text-emerald-300">Protected</div>
           </div>
+        </section>
+
+        <section className="rounded-2xl border border-white/10 bg-slate-900 p-6">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-2xl font-semibold">Contact Form Inquiries</h2>
+          </div>
+
+          {inquiries.length === 0 ? (
+            <p className="text-slate-400 text-sm">No submissions yet.</p>
+          ) : (
+            <div className="space-y-3">
+              {inquiries.map((inquiry) => (
+                <div key={inquiry.id} className="rounded-xl border border-white/10 bg-slate-800 p-4">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <div className="font-semibold text-white">{inquiry.name}</div>
+                      <div className="text-sm text-slate-300">
+                        <a href={`tel:${inquiry.phone}`} className="hover:underline">{inquiry.phone}</a>
+                        {inquiry.email && (
+                          <>
+                            {' · '}
+                            <a href={`mailto:${inquiry.email}`} className="hover:underline">{inquiry.email}</a>
+                          </>
+                        )}
+                      </div>
+                      <div className="mt-1 text-sm text-blue-300">{inquiry.program}</div>
+                      {inquiry.message && (
+                        <p className="mt-2 text-sm text-slate-300 max-w-2xl">{inquiry.message}</p>
+                      )}
+                    </div>
+                    <div className="flex flex-col items-end gap-2 flex-shrink-0">
+                      <span className="text-xs text-slate-500">
+                        {new Date(inquiry.createdAt).toLocaleString()}
+                      </span>
+                      <button
+                        onClick={() => deleteInquiry(inquiry.id)}
+                        className="rounded-lg border border-red-400/40 px-3 py-1 text-xs text-red-300 hover:bg-red-400/10"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
 
         <section className="rounded-2xl border border-white/10 bg-slate-900 p-6">

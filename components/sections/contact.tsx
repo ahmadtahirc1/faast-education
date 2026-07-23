@@ -13,14 +13,41 @@ export default function Contact() {
     message: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => {
-      setSubmitted(false)
-      setFormData({ name: '', email: '', phone: '', program: '', message: '' })
-    }, 3000)
+    setIsSubmitting(true)
+    setError('')
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      if (!res.ok) {
+        if (res.status === 400) {
+          const body = await res.json().catch(() => ({}))
+          setError(body.error ?? 'Please check the form and try again.')
+        } else {
+          setError('Something went wrong. Please try again or contact us via WhatsApp.')
+        }
+        return
+      }
+
+      setSubmitted(true)
+      setTimeout(() => {
+        setSubmitted(false)
+        setFormData({ name: '', email: '', phone: '', program: '', message: '' })
+      }, 3000)
+    } catch {
+      setError('Something went wrong. Please try again or contact us via WhatsApp.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (
@@ -206,15 +233,23 @@ export default function Contact() {
               />
             </div>
 
+            {error && (
+              <div className="text-sm text-red-500 bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3">
+                {error}
+              </div>
+            )}
+
             <motion.button
               type="submit"
-              className="w-full bg-accent text-accent-foreground py-3 rounded-lg font-bold hover:shadow-lg transition-shadow flex items-center justify-center gap-2"
+              className="w-full bg-accent text-accent-foreground py-3 rounded-lg font-bold hover:shadow-lg transition-shadow flex items-center justify-center gap-2 disabled:opacity-70"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              disabled={submitted}
+              disabled={submitted || isSubmitting}
             >
               {submitted ? (
                 <span>Message Sent! We will contact you shortly.</span>
+              ) : isSubmitting ? (
+                <span>Sending...</span>
               ) : (
                 <>
                   <Send size={18} />

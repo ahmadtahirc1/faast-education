@@ -70,7 +70,7 @@ export default function Navbar() {
             </a>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex gap-8 items-center">
+            <div className="hidden lg:flex gap-6 xl:gap-8 items-center">
               {navItems.map((item) => (
                 <a
                   key={item.label}
@@ -90,7 +90,7 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center gap-2">
+            <div className="lg:hidden flex items-center gap-2">
               <ThemeToggle />
               <button
                 onClick={() => setIsOpen(!isOpen)}
@@ -104,7 +104,7 @@ export default function Navbar() {
 
           {/* Mobile Menu */}
           {isOpen && (
-            <div className="md:hidden pb-4 space-y-1 border-t border-border pt-3">
+            <div className="lg:hidden pb-4 space-y-1 border-t border-border pt-3">
               {navItems.map((item) => (
                 <a
                   key={item.label}

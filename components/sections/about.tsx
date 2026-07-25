@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { CheckCircle, Award, MapPin, GraduationCap } from 'lucide-react'
+import { defaultTransition, fadeUp, staggerDelay, viewportOnce } from '@/lib/motion'
+import { SectionKicker } from '@/components/section-kicker'
+import { DecorativeBlobs } from '@/components/decorative-blobs'
 
 type AboutContent = {
   founderImage?: string
@@ -34,14 +37,18 @@ export default function About() {
   ]
 
   return (
-    <section id="about" className="py-20 bg-background">
+    <section id="about" className="relative overflow-hidden py-20 bg-background">
+      <DecorativeBlobs variant="accent" />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          transition={defaultTransition}
           className="text-center mb-16"
         >
+          <SectionKicker>About Us</SectionKicker>
           <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
             About FAAST Academy
           </h2>
@@ -71,9 +78,11 @@ export default function About() {
                 <motion.div
                   key={i}
                   className="flex items-start gap-3"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.08 }}
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={viewportOnce}
+                  transition={{ ...defaultTransition, delay: staggerDelay(i) }}
                 >
                   <CheckCircle className="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" />
                   <span className="text-foreground font-medium text-sm">{feature}</span>
@@ -90,7 +99,7 @@ export default function About() {
           >
             {/* Founder Card */}
             <motion.div
-              className="bg-card rounded-xl p-6 border border-border shadow-sm"
+              className="bg-card rounded-xl p-6 border border-border shadow-sm hover:shadow-lg transition-shadow"
               whileHover={{ scale: 1.02 }}
             >
               <div className="flex flex-col md:flex-row items-center gap-5">
@@ -109,7 +118,7 @@ export default function About() {
                   </div>
                 )}
                 <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-accent font-semibold mb-2">Founder & Vision</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-accent-ink font-semibold mb-2">Founder & Vision</p>
                   <h4 className="font-bold text-xl text-primary mb-2">Sir Rizwan Razi</h4>
                   <p className="text-sm text-foreground/70 leading-relaxed mb-3">
                     A celebrated mathematician, renowned maths teacher, and source of motivation for students across Pakistan. His dedication to change lives through education, innovation, and disciplined learning continues to inspire the FAAST family.
@@ -123,7 +132,7 @@ export default function About() {
 
             {/* Mission Card */}
             <motion.div
-              className="bg-primary rounded-xl p-6 text-primary-foreground"
+              className="bg-primary rounded-xl p-6 text-primary-foreground shadow-sm hover:shadow-lg transition-shadow"
               whileHover={{ scale: 1.02 }}
             >
               <div className="flex items-start gap-3">

@@ -2,6 +2,9 @@
 
 import { motion } from 'framer-motion'
 import { Award, Users, BookOpen, ClipboardCheck } from 'lucide-react'
+import { defaultTransition, fadeUp, staggerDelay, viewportOnce } from '@/lib/motion'
+import { SectionKicker } from '@/components/section-kicker'
+import { DecorativeBlobs } from '@/components/decorative-blobs'
 
 export default function Achievements() {
   const values = [
@@ -28,14 +31,18 @@ export default function Achievements() {
   ]
 
   return (
-    <section id="achievements" className="py-20 bg-background">
+    <section id="achievements" className="relative overflow-hidden py-20 bg-background">
+      <DecorativeBlobs variant="primary" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          transition={defaultTransition}
           className="text-center mb-16"
         >
+          <SectionKicker>Why Choose Us</SectionKicker>
           <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
             Why Students Choose Us
           </h2>
@@ -50,10 +57,12 @@ export default function Achievements() {
             return (
               <motion.div
                 key={index}
-                className="bg-card rounded-xl p-8 border border-border text-center hover:shadow-xl transition-shadow"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
+                className="bg-card rounded-xl p-8 border border-border text-center shadow-sm hover:shadow-xl hover:shadow-accent/10 transition-shadow"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOnce}
+                transition={{ ...defaultTransition, delay: staggerDelay(index) }}
                 whileHover={{ y: -5 }}
               >
                 <motion.div
@@ -72,9 +81,11 @@ export default function Achievements() {
 
         <motion.div
           className="mt-12 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          transition={defaultTransition}
         >
           <a
             href="https://www.facebook.com/p/FAAST-Education-100064106918760/"

@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react'
+import { SectionKicker } from '@/components/section-kicker'
+import { DecorativeBlobs } from '@/components/decorative-blobs'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -93,7 +95,8 @@ export default function Contact() {
   ]
 
   return (
-    <section id="contact" className="py-20 bg-card">
+    <section id="contact" className="relative overflow-hidden py-20 bg-card">
+      <DecorativeBlobs variant="accent" />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -101,6 +104,7 @@ export default function Contact() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
+          <SectionKicker>Contact</SectionKicker>
           <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
             Get In Touch
           </h2>
@@ -278,7 +282,7 @@ export default function Contact() {
               href="https://maps.google.com/?q=13-C+Ali+Tower+Jaranwala+Road+Faisalabad"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-shrink-0 bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors text-sm"
+              className="flex-shrink-0 bg-brand-navy text-brand-navy-foreground px-6 py-3 rounded-lg font-semibold hover:bg-brand-navy/90 transition-colors text-sm"
             >
               Open in Google Maps →
             </a>

@@ -1,9 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import { X } from 'lucide-react'
+import { defaultTransition, fadeUp, scaleIn, staggerDelay, viewportOnce } from '@/lib/motion'
+import { SectionKicker } from '@/components/section-kicker'
 
 type GalleryImage = {
   src: string
@@ -21,15 +23,27 @@ export default function Gallery() {
       .catch(() => setGalleryImages([]))
   }, [])
 
+  useEffect(() => {
+    if (!selectedImage) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedImage(null)
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [selectedImage])
+
   return (
     <section id="gallery" className="py-20 bg-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          transition={defaultTransition}
           className="text-center mb-16"
         >
+          <SectionKicker>Gallery</SectionKicker>
           <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
             Campus Life & Events
           </h2>
@@ -42,10 +56,12 @@ export default function Gallery() {
           {galleryImages.map((image, index) => (
             <motion.div
               key={`${image.src}-${index}`}
-              className="relative h-64 rounded-xl overflow-hidden cursor-pointer group bg-muted"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.05, duration: 0.4 }}
+              className="relative h-64 rounded-xl overflow-hidden cursor-pointer group bg-muted shadow-sm hover:shadow-xl transition-shadow"
+              variants={scaleIn}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOnce}
+              transition={{ ...defaultTransition, delay: staggerDelay(index) }}
               whileHover={{ scale: 1.02 }}
               onClick={() => setSelectedImage(image.src)}
             >
@@ -70,37 +86,40 @@ export default function Gallery() {
         </div>
       </div>
 
-      {selectedImage && (
-        <motion.div
-          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setSelectedImage(null)}
-        >
+      <AnimatePresence>
+        {selectedImage && (
           <motion.div
-            className="relative max-w-4xl w-full"
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0.9 }}
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImage(null)}
           >
-            <Image
-              src={selectedImage}
-              alt="Gallery"
-              width={1200}
-              height={600}
-              className="w-full h-auto rounded-xl"
-            />
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 bg-white text-black p-2 rounded-full hover:bg-gray-200 transition-colors"
+            <motion.div
+              className="relative max-w-4xl w-full"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <X size={24} />
-            </button>
+              <Image
+                src={selectedImage}
+                alt="Gallery"
+                width={1200}
+                height={600}
+                className="w-full h-auto rounded-xl"
+              />
+              <button
+                onClick={() => setSelectedImage(null)}
+                aria-label="Close"
+                className="absolute top-4 right-4 bg-white text-black p-2 rounded-full hover:bg-gray-200 transition-colors"
+              >
+                <X size={24} />
+              </button>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
+        )}
+      </AnimatePresence>
     </section>
   )
 }

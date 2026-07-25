@@ -51,7 +51,7 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-primary text-white py-16">
+    <footer className="bg-brand-navy text-brand-navy-foreground border-t-4 border-accent py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
 
@@ -62,7 +62,7 @@ export default function Footer() {
             transition={{ duration: 0.6 }}
           >
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-lg overflow-hidden bg-white/10 ring-1 ring-white/20">
+              <div className="w-12 h-12 rounded-lg overflow-hidden bg-brand-navy-foreground/10 ring-1 ring-brand-navy-foreground/20">
                 <Image
                   src="/faast logo.jpeg"
                   alt="FAAST Education logo"
@@ -73,8 +73,8 @@ export default function Footer() {
               </div>
               <span className="text-2xl font-bold">FAAST Education</span>
             </div>
-            <p className="text-white/70 mb-2 italic text-sm">&ldquo;Each one Teach one&rdquo;</p>
-            <p className="text-white/60 mb-6 text-sm leading-relaxed">
+            <p className="text-brand-navy-foreground/70 mb-2 italic text-sm">&ldquo;Each one Teach one&rdquo;</p>
+            <p className="text-brand-navy-foreground/60 mb-6 text-sm leading-relaxed">
               Faisalabad&apos;s premier coaching institute for academic excellence and university entry test preparation.
             </p>
 
@@ -88,7 +88,7 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-2 bg-white/10 rounded-lg ${social.color} transition-colors`}
+                    className={`p-2 bg-brand-navy-foreground/10 rounded-lg ${social.color} transition-colors`}
                     whileHover={{ scale: 1.1 }}
                     title={social.label}
                   >
@@ -109,7 +109,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {quickLinks.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="text-white/70 hover:text-accent transition-colors text-sm">
+                  <a href={link.href} className="text-brand-navy-foreground/70 hover:text-accent transition-colors text-sm">
                     {link.name}
                   </a>
                 </li>
@@ -127,7 +127,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {programs.map((link, index) => (
                 <li key={index}>
-                  <a href={link.href} className="text-white/70 hover:text-accent transition-colors text-sm">
+                  <a href={link.href} className="text-brand-navy-foreground/70 hover:text-accent transition-colors text-sm">
                     {link.name}
                   </a>
                 </li>
@@ -147,15 +147,15 @@ export default function Footer() {
                 <a href="tel:+923418576000" className="flex items-start gap-3 hover:text-accent transition-colors group">
                   <Phone size={18} className="text-accent flex-shrink-0 mt-0.5" />
                   <div>
-                    <span className="text-white/70 group-hover:text-accent text-sm block">03418576000</span>
-                    <span className="text-white/70 group-hover:text-accent text-sm block">03418576000</span>
+                    <span className="text-brand-navy-foreground/70 group-hover:text-accent text-sm block">03418576000</span>
+                    <span className="text-brand-navy-foreground/70 group-hover:text-accent text-sm block">03418576000</span>
                   </div>
                 </a>
               </li>
               <li>
                 <a href="mailto:Faastacademyofficial@gmail.com" className="flex items-start gap-3 hover:text-accent transition-colors group">
                   <Mail size={18} className="text-accent flex-shrink-0 mt-0.5" />
-                  <span className="text-white/70 group-hover:text-accent text-sm">Faastacademyofficial@gmail.com</span>
+                  <span className="text-brand-navy-foreground/70 group-hover:text-accent text-sm">Faastacademyofficial@gmail.com</span>
                 </a>
               </li>
               <li>
@@ -166,7 +166,7 @@ export default function Footer() {
                   className="flex items-start gap-3 hover:text-accent transition-colors group"
                 >
                   <MapPin size={18} className="text-accent flex-shrink-0 mt-0.5" />
-                  <span className="text-white/70 group-hover:text-accent text-sm">
+                  <span className="text-brand-navy-foreground/70 group-hover:text-accent text-sm">
                     13-C Ali Tower, Jaranwala Road, Near RCG Plaza, Faisalabad, Pakistan
                   </span>
                 </a>
@@ -188,21 +188,21 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-white/20 pt-8">
+        <div className="border-t border-brand-navy-foreground/20 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-4">
-            <p className="text-white/60 text-sm">
+            <p className="text-brand-navy-foreground/60 text-sm">
               © {currentYear} FAAST Education, Faisalabad. All rights reserved.
             </p>
-            <p className="text-white/40 text-xs flex items-center gap-1">
+            <p className="text-brand-navy-foreground/40 text-xs flex items-center gap-1">
               Made with <Heart size={12} className="text-red-400" /> for FAAST Education students
             </p>
-            <div className="flex gap-6 text-white/60">
+            <div className="flex gap-6 text-brand-navy-foreground/60">
               <a href="#" className="hover:text-accent transition-colors text-sm">Privacy Policy</a>
               <a href="#" className="hover:text-accent transition-colors text-sm">Terms of Service</a>
             </div>
           </div>
 
-          <div className="mt-4 text-center text-white/60 text-xs md:text-sm">
+          <div className="mt-4 text-center text-brand-navy-foreground/60 text-xs md:text-sm">
             Developed by{' '}
             <a
               href="https://v0-modernportfolio-ebon.vercel.app/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAb21jcASiT-pleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAafK0USJ4U01Vl4d9GElUxFyZMoX6twfDSWMo3BYPvvAwN74D9EmOM9pHWHLyw_aem_91C3ngfw_UY623Uj1YLWCw"

@@ -7,6 +7,7 @@ import { GraduationCap } from 'lucide-react'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import WhatsAppButton from '@/components/whatsapp-button'
+import { SectionKicker } from '@/components/section-kicker'
 
 type FounderContent = {
   founderImage?: string
@@ -55,9 +56,7 @@ export default function FounderPage() {
               </div>
 
               <div>
-                <p className="text-sm uppercase tracking-[0.25em] text-accent font-semibold mb-3">
-                  Founder & Mentor
-                </p>
+                <SectionKicker>Founder & Mentor</SectionKicker>
                 <h1 className="text-4xl md:text-5xl font-bold text-primary mb-4">
                   Sir Rizwan Razi
                 </h1>

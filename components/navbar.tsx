@@ -1,12 +1,20 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Menu, X, Phone, MessageCircle } from 'lucide-react'
 import { ThemeToggle } from './theme-toggle'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const navItems = [
     { label: 'Home', href: '/' },
@@ -20,7 +28,11 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
       {/* Utility bar */}
-      <div className="hidden sm:block bg-primary text-primary-foreground">
+      <div
+        className={`hidden sm:block bg-brand-navy text-brand-navy-foreground overflow-hidden transition-[max-height,opacity] duration-300 ${
+          scrolled ? 'max-h-0 opacity-0' : 'max-h-11 opacity-100'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-11 flex items-center justify-end gap-6 text-sm font-medium">
           <a href="tel:+923418576000" className="flex items-center gap-1.5 hover:text-accent transition-colors">
             <Phone className="w-3.5 h-3.5" />
@@ -39,9 +51,15 @@ export default function Navbar() {
       </div>
 
       {/* Main nav */}
-      <div className="bg-background border-b border-border shadow-sm">
+      <div
+        className={`border-b transition-all duration-300 ${
+          scrolled
+            ? 'bg-background/85 backdrop-blur-md border-border shadow-md'
+            : 'bg-background border-transparent shadow-sm'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-28">
+          <div className={`flex justify-between items-center transition-[height] duration-300 ${scrolled ? 'h-20' : 'h-28'}`}>
             <a href="/" className="flex items-center gap-4">
               <Image
                 src="/faast logo.jpeg"

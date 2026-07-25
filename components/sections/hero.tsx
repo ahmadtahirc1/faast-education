@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { useEffect, useMemo, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 
 type HeroContent = {
-  heroBackground?: string
+  heroImages?: Array<{ id: string; src: string }>
   announcement?: {
     enabled: boolean
     title: string
@@ -17,10 +17,14 @@ type HeroContent = {
   }
 }
 
+const AUTOPLAY_MS = 6000
+
 export default function Hero() {
   const [content, setContent] = useState<HeroContent>({})
   const [isAnnouncementDismissed, setIsAnnouncementDismissed] = useState(false)
-  const [heroImageFailed, setHeroImageFailed] = useState(false)
+  const [failedIndices, setFailedIndices] = useState<Set<number>>(new Set())
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
 
   useEffect(() => {
     fetch('/api/site-content')
@@ -29,26 +33,80 @@ export default function Hero() {
       .catch(() => undefined)
   }, [])
 
-  const heroImage = !heroImageFailed ? content.heroBackground : undefined
+  const images = useMemo(
+    () =>
+      (content.heroImages ?? [])
+        .map((image, index) => ({ ...image, index }))
+        .filter((image) => image.src && !failedIndices.has(image.index)),
+    [content.heroImages, failedIndices],
+  )
+
+  useEffect(() => {
+    if (currentIndex >= images.length) setCurrentIndex(0)
+  }, [images.length, currentIndex])
+
+  useEffect(() => {
+    if (images.length <= 1 || isPaused) return
+    const id = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length)
+    }, AUTOPLAY_MS)
+    return () => clearInterval(id)
+  }, [images.length, isPaused])
+
   const announcement = content.announcement || { enabled: false, title: '', message: '' }
 
   const dismissAnnouncement = () => {
     setIsAnnouncementDismissed(true)
   }
 
+  const activeImage = images[currentIndex]
+
   return (
     <section id="hero" className="relative overflow-hidden pt-28 sm:pt-[156px] bg-primary">
-      <div className="relative w-full aspect-video">
-        {heroImage && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={heroImage as string}
-            alt="FAAST Education Faisalabad"
-            className="absolute inset-0 w-full h-full object-cover"
-            onError={() => setHeroImageFailed(true)}
-          />
-        )}
+      <div
+        className="relative w-full aspect-video"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
+        <AnimatePresence initial={false}>
+          {activeImage && (
+            <motion.div
+              key={activeImage.id}
+              className="absolute inset-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={activeImage.src}
+                alt="FAAST Education Faisalabad"
+                className="absolute inset-0 w-full h-full object-cover"
+                onError={() =>
+                  setFailedIndices((prev) => new Set(prev).add(activeImage.index))
+                }
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <div className="absolute inset-0 bg-primary/25" />
+
+        {images.length > 1 && (
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+            {images.map((image, i) => (
+              <button
+                key={image.id}
+                onClick={() => setCurrentIndex(i)}
+                aria-label={`Show slide ${i + 1}`}
+                className={`h-2 rounded-full transition-all ${
+                  i === currentIndex ? 'bg-white w-8' : 'bg-white/50 w-2'
+                }`}
+              />
+            ))}
+          </div>
+        )}
 
         <div className="absolute inset-0 flex items-center justify-center px-4">
           <motion.div

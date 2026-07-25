@@ -28,15 +28,15 @@ export default function AdminLogin() {
     <main className="flex min-h-screen items-center justify-center bg-slate-950 px-4 text-white">
       <form onSubmit={handleSubmit} className="w-full max-w-md rounded-2xl border border-white/10 bg-slate-900 p-8 shadow-xl">
         <h1 className="mb-2 text-2xl font-bold">Admin Access</h1>
-        <p className="mb-6 text-sm text-slate-300">Enter the admin email and password to manage FAAST content.</p>
+        <p className="mb-6 text-sm text-slate-300">Enter the admin username and password to manage FAAST content.</p>
 
-        <label className="mb-2 block text-sm text-slate-300">Email</label>
+        <label className="mb-2 block text-sm text-slate-300">Username</label>
         <input
-          type="email"
+          type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           className="w-full rounded-lg border border-white/10 bg-slate-800 px-3 py-2"
-          placeholder="Enter admin email"
+          placeholder="Enter admin username"
         />
 
         <label className="mb-2 mt-4 block text-sm text-slate-300">Password</label>

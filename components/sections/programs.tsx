@@ -1,12 +1,14 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import {
   Moon, Target, Cpu, Heart, Code, FileText, GraduationCap, Stethoscope,
   Clock, Users, BookOpen, ChevronDown, ChevronUp, Landmark, Calendar, Phone, ArrowRight
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import { defaultTransition, fadeUp, staggerDelay, viewportOnce } from '@/lib/motion'
+import { SectionKicker } from '@/components/section-kicker'
 
 const iconMap: Record<string, React.ElementType> = {
   Moon, Target, Cpu, Heart, Code, FileText, GraduationCap, Stethoscope,
@@ -51,11 +53,14 @@ export default function Programs() {
     <section id="programs" className="py-20 bg-card">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          transition={defaultTransition}
           className="text-center mb-16"
         >
+          <SectionKicker>Our Courses</SectionKicker>
           <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
             Our Courses
           </h2>
@@ -72,19 +77,21 @@ export default function Programs() {
             return (
               <motion.div
                 key={program.id}
-                className="bg-background rounded-xl overflow-hidden border border-border hover:shadow-2xl transition-all group flex flex-col"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.07, duration: 0.5 }}
+                className="bg-background rounded-xl overflow-hidden border border-border shadow-sm hover:shadow-xl hover:shadow-primary/10 hover:border-accent/40 transition-all group flex flex-col"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOnce}
+                transition={{ ...defaultTransition, delay: staggerDelay(index) }}
                 whileHover={{ y: -6 }}
               >
-                <div className="relative h-36 overflow-hidden bg-muted flex-shrink-0">
+                <div className="relative h-44 overflow-hidden bg-muted flex-shrink-0">
                   {program.image && !failedImages.has(program.id) && (
                     <Image
                       src={program.image}
                       alt={program.name}
                       fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                       onError={() => setFailedImages((prev) => new Set(prev).add(program.id))}
                     />
                   )}
@@ -96,16 +103,17 @@ export default function Programs() {
                       {program.badge}
                     </span>
                   )}
-                  <div className="absolute bottom-3 left-4">
-                    <div className={`p-2 rounded-lg ${program.image && !failedImages.has(program.id) ? 'bg-white/20 backdrop-blur-sm' : 'bg-primary/10'}`}>
-                      <Icon className={`w-5 h-5 ${program.image && !failedImages.has(program.id) ? 'text-white' : 'text-primary'}`} />
-                    </div>
+                </div>
+
+                <div className="relative -mt-8 z-10 ml-5">
+                  <div className="w-14 h-14 rounded-full bg-background shadow-md border border-border flex items-center justify-center">
+                    <Icon className="w-6 h-6 text-primary" />
                   </div>
                 </div>
 
-                <div className="p-5 flex flex-col flex-1">
+                <div className="p-5 pt-3 flex flex-col flex-1">
                   <h3 className="text-lg font-bold text-primary mb-1 leading-tight">{program.name}</h3>
-                  <p className="text-xs text-accent font-semibold mb-2">{program.tagline}</p>
+                  <p className="text-xs text-accent-ink font-semibold mb-2">{program.tagline}</p>
                   <p className="text-sm text-foreground/70 leading-relaxed mb-3 flex-1">
                     {program.description}
                   </p>
@@ -129,54 +137,60 @@ export default function Programs() {
                     {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </button>
 
-                  {isExpanded && (
-                    <motion.ul
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="space-y-1 mb-3"
-                    >
-                      {program.details.map((detail, i) => (
-                        <li key={i} className="flex items-start gap-2 text-xs text-foreground/70">
-                          <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0 mt-1.5" />
-                          {detail}
-                        </li>
-                      ))}
-                      {program.university && (
-                        <li className="flex items-center gap-1.5 text-xs text-primary font-semibold mt-2 pt-2 border-t border-border">
-                          <Landmark className="w-3.5 h-3.5 flex-shrink-0" /> {program.university}
-                        </li>
-                      )}
-                    </motion.ul>
-                  )}
+                  <AnimatePresence initial={false}>
+                    {isExpanded && (
+                      <motion.ul
+                        key="details"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="space-y-1 mb-3 overflow-hidden"
+                      >
+                        {program.details.map((detail, i) => (
+                          <li key={i} className="flex items-start gap-2 text-xs text-foreground/70">
+                            <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0 mt-1.5" />
+                            {detail}
+                          </li>
+                        ))}
+                        {program.university && (
+                          <li className="flex items-center gap-1.5 text-xs text-primary font-semibold mt-2 pt-2 border-t border-border">
+                            <Landmark className="w-3.5 h-3.5 flex-shrink-0" /> {program.university}
+                          </li>
+                        )}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
 
-                  {isExpanded && program.subCourses && program.subCourses.length > 0 && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="mb-3 space-y-2 border-t border-border pt-3"
-                    >
-                      <div className="text-xs font-bold text-primary uppercase tracking-wide">Batches Offered</div>
-                      {program.subCourses.map((sub, i) => (
-                        <div key={i} className="bg-muted rounded-lg p-2.5">
-                          <div className="flex items-baseline justify-between gap-2">
-                            <span className="text-xs font-bold text-primary">{sub.name}</span>
-                            <span className="text-[10px] text-foreground/60 flex-shrink-0">{sub.duration}</span>
+                  <AnimatePresence initial={false}>
+                    {isExpanded && program.subCourses && program.subCourses.length > 0 && (
+                      <motion.div
+                        key="subcourses"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="mb-3 space-y-2 border-t border-border pt-3 overflow-hidden"
+                      >
+                        <div className="text-xs font-bold text-primary uppercase tracking-wide">Batches Offered</div>
+                        {program.subCourses.map((sub, i) => (
+                          <div key={i} className="bg-muted rounded-lg p-2.5">
+                            <div className="flex items-baseline justify-between gap-2">
+                              <span className="text-xs font-bold text-primary">{sub.name}</span>
+                              <span className="text-[10px] text-foreground/60 flex-shrink-0">{sub.duration}</span>
+                            </div>
+                            <p className="text-[11px] text-foreground/70 mt-1 leading-relaxed">{sub.description}</p>
                           </div>
-                          <p className="text-[11px] text-foreground/70 mt-1 leading-relaxed">{sub.description}</p>
-                        </div>
-                      ))}
-                    </motion.div>
-                  )}
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
 
                   <a
                     href={`/programs/${program.id}`}
-                    className="flex items-center justify-center gap-1.5 w-full border border-primary text-primary font-semibold py-2 rounded-lg hover:bg-primary/5 transition-colors text-sm text-center mb-2"
+                    className="group/link flex items-center justify-center gap-1.5 w-full border border-primary text-primary font-semibold py-2 rounded-lg hover:bg-primary/5 transition-colors text-sm text-center mb-2"
                   >
-                    View Full Details <ArrowRight className="w-3.5 h-3.5" />
+                    View Full Details <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-1" />
                   </a>
 
                   <motion.a
@@ -196,15 +210,17 @@ export default function Programs() {
         </div>
 
         <motion.div
-          className="mt-12 bg-primary rounded-2xl p-8 text-white text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          className="mt-12 bg-brand-navy rounded-2xl p-8 text-brand-navy-foreground text-center"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          transition={defaultTransition}
         >
           <h3 className="flex items-center justify-center gap-2 text-2xl font-bold mb-2">
             <Calendar className="w-6 h-6" /> Flexible Batch Timings
           </h3>
-          <p className="text-white/80 mb-6 max-w-xl mx-auto">
+          <p className="text-brand-navy-foreground/80 mb-6 max-w-xl mx-auto">
             Morning and Evening batches available for all courses. New batches starting every month.
           </p>
           <div className="flex flex-wrap justify-center gap-6 text-sm">
@@ -213,13 +229,13 @@ export default function Programs() {
               { time: 'Afternoon', hours: '12:00 PM – 4:00 PM' },
               { time: 'Evening', hours: '4:00 PM – 9:00 PM' },
             ].map((slot) => (
-              <div key={slot.time} className="bg-white/10 rounded-xl px-6 py-3">
+              <div key={slot.time} className="bg-brand-navy-foreground/10 rounded-xl px-6 py-3">
                 <div className="font-bold text-accent">{slot.time}</div>
-                <div className="text-white/80">{slot.hours}</div>
+                <div className="text-brand-navy-foreground/80">{slot.hours}</div>
               </div>
             ))}
           </div>
-          <p className="mt-6 flex items-center justify-center gap-1.5 text-white/70 text-sm">
+          <p className="mt-6 flex items-center justify-center gap-1.5 text-brand-navy-foreground/70 text-sm">
             <Phone className="w-4 h-4" /> Call us at <a href="tel:+923418576000" className="text-accent font-bold hover:underline">03418576000</a> to book your seat
           </p>
         </motion.div>

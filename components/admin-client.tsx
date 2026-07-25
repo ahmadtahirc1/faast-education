@@ -29,6 +29,7 @@ const defaultContent: SiteContent = {
   whatsapp: '923418576000',
   description: 'FAAST Education is a premier educational institution in Faisalabad dedicated to providing advanced coaching and entry test preparation for students of all levels.',
   heroBackground: '',
+  heroImages: [],
   founderImage: '',
   announcement: defaultAnnouncement,
   programs: [],
@@ -106,7 +107,7 @@ export default function AdminClient() {
     index: number,
   ) => {
     const slot =
-      type === 'hero' ? 'hero' :
+      type === 'hero' ? `hero-${content.heroImages?.[index]?.id ?? index}` :
       type === 'founder' ? 'founder' :
       type === 'announcement' ? 'announcement' :
       type === 'program' ? `program-${content.programs?.[index]?.id ?? index}` :
@@ -149,8 +150,10 @@ export default function AdminClient() {
       nextContent = { ...content, galleryImages: next }
       label = 'Gallery image'
     } else if (type === 'hero') {
-      nextContent = { ...content, heroBackground: uploaded.url }
-      label = 'Hero background'
+      const next = [...(content.heroImages ?? [])]
+      next[index] = { ...next[index], src: uploaded.url }
+      nextContent = { ...content, heroImages: next }
+      label = 'Hero image'
     } else if (type === 'facility') {
       const next = [...(content.facilities ?? [])]
       next[index] = { ...next[index], image: uploaded.url }
@@ -192,6 +195,33 @@ export default function AdminClient() {
         },
       ],
     }))
+  }
+
+  const addHeroImage = () => {
+    setContent((prev) => ({
+      ...prev,
+      heroImages: [
+        ...(prev.heroImages ?? []),
+        { id: `hero-${Date.now()}`, src: '' },
+      ],
+    }))
+  }
+
+  const removeHeroImage = (index: number) => {
+    setContent((prev) => ({
+      ...prev,
+      heroImages: (prev.heroImages ?? []).filter((_, i) => i !== index),
+    }))
+  }
+
+  const moveHeroImage = (index: number, direction: -1 | 1) => {
+    setContent((prev) => {
+      const next = [...(prev.heroImages ?? [])]
+      const target = index + direction
+      if (target < 0 || target >= next.length) return prev
+      ;[next[index], next[target]] = [next[target], next[index]]
+      return { ...prev, heroImages: next }
+    })
   }
 
   const addGalleryImage = () => {
@@ -327,30 +357,77 @@ export default function AdminClient() {
 
         <section className="rounded-2xl border border-white/10 bg-slate-900 p-6">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-2xl font-semibold">Hero & Announcement</h2>
+            <h2 className="text-2xl font-semibold">Hero Images</h2>
+            <button
+              onClick={addHeroImage}
+              className="rounded-lg border border-blue-400 px-3 py-2 text-sm text-blue-300"
+            >
+              Add Hero Image
+            </button>
+          </div>
+          <p className="mb-4 text-sm text-slate-400">
+            The homepage banner rotates through these images. We recommend 3-6 wide/landscape photos.
+          </p>
+
+          {(content.heroImages ?? []).length === 0 ? (
+            <p className="text-slate-400 text-sm">No hero images yet - add one to get started.</p>
+          ) : (
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {(content.heroImages ?? []).map((heroImage, index) => (
+                <div key={heroImage.id} className="rounded-xl border border-white/10 bg-slate-800 p-4">
+                  <div className="relative mb-3 h-40 overflow-hidden rounded-lg bg-slate-700 flex items-center justify-center">
+                    {heroImage.src ? (
+                      <Image src={heroImage.src} alt={`Hero image ${index + 1}`} fill className="object-cover" />
+                    ) : (
+                      <span className="text-sm text-slate-400">No image yet</span>
+                    )}
+                  </div>
+                  <label className="mb-2 block text-sm text-slate-300">Upload image</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]
+                      if (file) uploadAndUpdate(file, 'hero', index)
+                    }}
+                    className="w-full rounded-lg border border-white/10 bg-slate-900 px-3 py-2"
+                  />
+                  <div className="mt-3 flex items-center justify-between gap-2">
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => moveHeroImage(index, -1)}
+                        disabled={index === 0}
+                        className="rounded-lg border border-white/20 px-3 py-1 text-xs text-slate-200 disabled:opacity-30"
+                      >
+                        Move Up
+                      </button>
+                      <button
+                        onClick={() => moveHeroImage(index, 1)}
+                        disabled={index === (content.heroImages ?? []).length - 1}
+                        className="rounded-lg border border-white/20 px-3 py-1 text-xs text-slate-200 disabled:opacity-30"
+                      >
+                        Move Down
+                      </button>
+                    </div>
+                    <button
+                      onClick={() => removeHeroImage(index)}
+                      className="rounded-lg border border-red-400/40 px-3 py-1 text-xs text-red-300 hover:bg-red-400/10"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
+        <section className="rounded-2xl border border-white/10 bg-slate-900 p-6">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-2xl font-semibold">Announcement</h2>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
-            <label className="space-y-1">
-              <span className="text-sm text-slate-300">Hero Background Image Path</span>
-              <input
-                value={content.heroBackground ?? ''}
-                onChange={(e) => setContent({ ...content, heroBackground: e.target.value })}
-                className="w-full rounded-lg border border-white/10 bg-slate-800 px-3 py-2"
-              />
-            </label>
-            <label className="space-y-1">
-              <span className="text-sm text-slate-300">Upload Hero Background</span>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  const file = e.target.files?.[0]
-                  if (file) uploadAndUpdate(file, 'hero', 0)
-                }}
-                className="w-full rounded-lg border border-white/10 bg-slate-800 px-3 py-2"
-              />
-            </label>
             <label className="space-y-1">
               <span className="text-sm text-slate-300">Announcement Enabled</span>
               <select

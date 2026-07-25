@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { BookOpen, Cpu, Presentation, Coffee, GraduationCap, Landmark, Building2 } from 'lucide-react'
+import { defaultTransition, fadeUp, staggerDelay, viewportOnce } from '@/lib/motion'
+import { SectionKicker } from '@/components/section-kicker'
 
 const iconMap = {
   BookOpen,
@@ -41,11 +43,14 @@ export default function Facilities() {
     <section id="facilities" className="py-20 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          transition={defaultTransition}
           className="text-center mb-16"
         >
+          <SectionKicker>Our Campus</SectionKicker>
           <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
             World-Class Facilities
           </h2>
@@ -60,19 +65,21 @@ export default function Facilities() {
             return (
               <motion.div
                 key={index}
-                className="group"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
+                className="group bg-card border border-border rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-primary/10 transition-shadow"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOnce}
+                transition={{ ...defaultTransition, delay: staggerDelay(index) }}
                 whileHover={{ y: -5 }}
               >
-                <div className="relative h-56 rounded-xl overflow-hidden mb-4 bg-muted">
+                <div className="relative h-56 overflow-hidden bg-muted">
                   {facility.image && !failedImages.has(index) && (
                     <Image
                       src={facility.image}
                       alt={facility.title}
                       fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                       onError={() => setFailedImages((prev) => new Set(prev).add(index))}
                     />
                   )}
@@ -90,8 +97,10 @@ export default function Facilities() {
                   </div>
                 </div>
 
-                <h3 className="text-xl font-bold text-primary mb-2">{facility.title}</h3>
-                <p className="text-foreground/70 leading-relaxed">{facility.description}</p>
+                <div className="p-5">
+                  <h3 className="text-xl font-bold text-primary mb-2">{facility.title}</h3>
+                  <p className="text-foreground/70 leading-relaxed">{facility.description}</p>
+                </div>
               </motion.div>
             )
           })}

@@ -2,7 +2,10 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react'
+import { defaultTransition, fadeUp, viewportOnce } from '@/lib/motion'
+import { SectionKicker } from '@/components/section-kicker'
+import { DecorativeBlobs } from '@/components/decorative-blobs'
 
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -54,14 +57,18 @@ export default function Testimonials() {
   }
 
   return (
-    <section className="py-20 bg-card">
+    <section className="relative overflow-hidden py-20 bg-card">
+      <DecorativeBlobs variant="primary" />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          transition={defaultTransition}
           className="text-center mb-16"
         >
+          <SectionKicker>Success Stories</SectionKicker>
           <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
             Student Success Stories
           </h2>
@@ -79,15 +86,16 @@ export default function Testimonials() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-              className="bg-background rounded-2xl p-8 md:p-12 border border-border"
+              className="relative bg-background rounded-2xl p-8 md:p-12 border border-border shadow-sm"
             >
+              <Quote className="absolute top-6 left-6 w-10 h-10 text-primary/10" />
               <div className="flex flex-col items-center text-center">
                 {/* Rating */}
                 <div className="flex gap-1 mb-6">
                   {Array(testimonials[currentIndex].rating)
                     .fill(0)
                     .map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-accent text-accent" />
+                      <Star key={i} className="w-5 h-5 fill-accent-ink text-accent-ink" />
                     ))}
                 </div>
 
@@ -98,7 +106,7 @@ export default function Testimonials() {
 
                 {/* Author */}
                 <div className="mb-2">
-                  <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground">
+                  <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground ring-4 ring-accent/20">
                     {testimonials[currentIndex].name
                       .split(' ')
                       .map((part) => part[0])
@@ -107,7 +115,7 @@ export default function Testimonials() {
                   <h4 className="text-xl font-bold text-primary">
                     {testimonials[currentIndex].name}
                   </h4>
-                  <p className="text-accent font-semibold text-sm mt-1">
+                  <p className="text-accent-ink font-semibold text-sm mt-1">
                     {testimonials[currentIndex].role}
                   </p>
                   <p className="text-foreground/50 text-sm">
@@ -156,9 +164,11 @@ export default function Testimonials() {
         {/* CTA */}
         <motion.div
           className="text-center mt-12"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          transition={defaultTransition}
         >
           <p className="text-foreground/60 mb-4 text-sm">
             Join thousands of successful students at FAAST Education , Faisalabad

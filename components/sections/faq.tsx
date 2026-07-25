@@ -1,8 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
+import { defaultTransition, fadeUp, staggerDelay, viewportOnce } from '@/lib/motion'
+import { SectionKicker } from '@/components/section-kicker'
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
@@ -54,11 +56,14 @@ export default function FAQ() {
     <section id="faq" className="py-20 bg-background">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          transition={defaultTransition}
           className="text-center mb-16"
         >
+          <SectionKicker>FAQ</SectionKicker>
           <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
             Frequently Asked Questions
           </h2>
@@ -71,10 +76,12 @@ export default function FAQ() {
           {faqs.map((faq, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05, duration: 0.4 }}
-              className="bg-card rounded-lg border border-border overflow-hidden"
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportOnce}
+              transition={{ ...defaultTransition, delay: staggerDelay(index) }}
+              className="bg-card rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-shadow"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
@@ -89,25 +96,30 @@ export default function FAQ() {
                 </motion.div>
               </button>
 
-              {openIndex === index && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="px-6 py-4 bg-muted/50 border-t border-border"
-                >
-                  <p className="text-foreground/70 leading-relaxed text-sm">{faq.answer}</p>
-                </motion.div>
-              )}
+              <AnimatePresence initial={false}>
+                {openIndex === index && (
+                  <motion.div
+                    key="panel"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="px-6 py-4 bg-muted/50 border-t border-border overflow-hidden"
+                  >
+                    <p className="text-foreground/70 leading-relaxed text-sm">{faq.answer}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          transition={{ ...defaultTransition, delay: 0.15 }}
           className="text-center mt-12"
         >
           <p className="text-foreground/70 mb-4">Still have questions?</p>

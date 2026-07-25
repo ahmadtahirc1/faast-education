@@ -16,6 +16,10 @@ export type SiteContent = {
   whatsapp: string
   description: string
   heroBackground?: string
+  heroImages?: Array<{
+    id: string
+    src: string
+  }>
   founderImage?: string
   announcement?: {
     enabled: boolean
@@ -90,10 +94,21 @@ function backfillFromBundledDefaults(remote: SiteContent, bundled: SiteContent):
   return { ...bundled, ...remote, programs }
 }
 
+// Content saved before the hero carousel existed only has a single
+// `heroBackground` string. Surface it as a one-item `heroImages` list so the
+// carousel has something to render - this is read-time only, it does not
+// write back to Supabase until the admin next hits Save.
+function migrateHeroImages(content: SiteContent): SiteContent {
+  if (content.heroImages && content.heroImages.length > 0) return content
+  if (!content.heroBackground) return content
+
+  return { ...content, heroImages: [{ id: 'legacy', src: content.heroBackground }] }
+}
+
 export async function getSiteContent(): Promise<SiteContent> {
   const bundled = await readBundledDefault()
   const supabase = getSupabaseServerClient()
-  if (!supabase) return bundled
+  if (!supabase) return migrateHeroImages(bundled)
 
   try {
     const { data, error } = await supabase
@@ -102,12 +117,12 @@ export async function getSiteContent(): Promise<SiteContent> {
       .eq('id', 1)
       .maybeSingle()
 
-    if (error || !data) return bundled
+    if (error || !data) return migrateHeroImages(bundled)
 
-    return backfillFromBundledDefaults(data.data as SiteContent, bundled)
+    return migrateHeroImages(backfillFromBundledDefaults(data.data as SiteContent, bundled))
   } catch (error) {
     console.error('Failed to load site content from Supabase, falling back to bundled defaults:', error)
-    return bundled
+    return migrateHeroImages(bundled)
   }
 }
 

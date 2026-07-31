@@ -91,7 +91,7 @@ export default function Programs() {
                       src={program.image}
                       alt={program.name}
                       fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                      className="object-contain group-hover:scale-110 transition-transform duration-700 ease-out"
                       onError={() => setFailedImages((prev) => new Set(prev).add(program.id))}
                     />
                   )}

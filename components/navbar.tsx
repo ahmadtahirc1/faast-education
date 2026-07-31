@@ -62,7 +62,7 @@ export default function Navbar() {
           <div className={`flex justify-between items-center transition-[height] duration-300 ${scrolled ? 'h-20' : 'h-28'}`}>
             <a href="/" className="flex items-center gap-4">
               <Image
-                src="/faast logo.jpeg"
+                src="/new-logo-faast.jpeg"
                 alt="FAAST Education logo"
                 width={72}
                 height={72}

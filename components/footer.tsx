@@ -64,7 +64,7 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-lg overflow-hidden bg-brand-navy-foreground/10 ring-1 ring-brand-navy-foreground/20">
                 <Image
-                  src="/faast logo.jpeg"
+                  src="/new-logo-faast.jpeg"
                   alt="FAAST Education logo"
                   width={48}
                   height={48}

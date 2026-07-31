@@ -13,7 +13,7 @@ export function CourseBannerImage({ src, alt }: { src: string; alt: string }) {
       src={src}
       alt={alt}
       fill
-      className="object-cover"
+      className="object-contain"
       onError={() => setFailed(true)}
     />
   )

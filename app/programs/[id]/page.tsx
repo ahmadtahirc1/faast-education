@@ -196,7 +196,7 @@ export default async function ProgramDetailPage({
                     <a
                       key={other.id}
                       href={`/programs/${other.id}`}
-                      className="flex items-center gap-3 bg-card border border-border rounded-xl p-4 hover:border-primary hover:shadow-md transition-all"
+                      className="flex items-center gap-3 min-w-0 bg-card border border-border rounded-xl p-4 hover:border-primary hover:shadow-md transition-all"
                     >
                       <div className="p-2 bg-primary/10 rounded-lg flex-shrink-0">
                         <OtherIcon className="w-5 h-5 text-primary" />

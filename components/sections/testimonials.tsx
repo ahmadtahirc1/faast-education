@@ -4,8 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react'
 import { defaultTransition, fadeUp, viewportOnce } from '@/lib/motion'
-import { SectionKicker } from '@/components/section-kicker'
-import { DecorativeBlobs } from '@/components/decorative-blobs'
+import { RevealHeading } from '@/components/reveal-heading'
 
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -56,9 +55,10 @@ export default function Testimonials() {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
   }
 
+  const active = testimonials[currentIndex]
+
   return (
-    <section className="relative overflow-hidden py-20 bg-card">
-      <DecorativeBlobs variant="primary" />
+    <section className="bg-card py-24 sm:py-32">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={fadeUp}
@@ -66,120 +66,104 @@ export default function Testimonials() {
           whileInView="visible"
           viewport={viewportOnce}
           transition={defaultTransition}
-          className="text-center mb-16"
+          className="mb-16"
         >
-          <SectionKicker>Success Stories</SectionKicker>
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-            Student Success Stories
-          </h2>
-          <p className="text-xl text-foreground/70">
-            Real students. Real results. From FAAST Education , Faisalabad.
-          </p>
+          <span className="text-eyebrow font-bold uppercase text-accent-ink">Success Stories</span>
+          <RevealHeading text="Student success stories" as="h2" className="text-h1 mt-2 text-primary" />
         </motion.div>
 
-        {/* Testimonial Carousel */}
         <div className="relative">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="relative bg-background rounded-2xl p-8 md:p-12 border border-border shadow-sm"
-            >
-              <Quote className="absolute top-6 left-6 w-10 h-10 text-primary/10" />
-              <div className="flex flex-col items-center text-center">
-                {/* Rating */}
-                <div className="flex gap-1 mb-6">
-                  {Array(testimonials[currentIndex].rating)
-                    .fill(0)
-                    .map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-accent-ink text-accent-ink" />
-                    ))}
-                </div>
+          <Quote className="pointer-events-none absolute -top-6 -left-2 h-28 w-28 text-primary/5 sm:h-36 sm:w-36" />
 
-                {/* Testimonial Text */}
-                <p className="text-lg text-foreground/80 mb-8 max-w-2xl leading-relaxed italic">
-                  &ldquo;{testimonials[currentIndex].text}&rdquo;
-                </p>
-
-                {/* Author */}
-                <div className="mb-2">
-                  <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground ring-4 ring-accent/20">
-                    {testimonials[currentIndex].name
-                      .split(' ')
-                      .map((part) => part[0])
-                      .join('')}
-                  </div>
-                  <h4 className="text-xl font-bold text-primary">
-                    {testimonials[currentIndex].name}
-                  </h4>
-                  <p className="text-accent-ink font-semibold text-sm mt-1">
-                    {testimonials[currentIndex].role}
-                  </p>
-                  <p className="text-foreground/50 text-sm">
-                    {testimonials[currentIndex].company}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Navigation Buttons */}
-          <div className="flex justify-center gap-4 mt-8">
-            <motion.button
+          <div className="flex items-start gap-2 sm:gap-6">
+            <button
               onClick={prevTestimonial}
-              className="p-3 bg-accent text-accent-foreground rounded-full hover:shadow-lg transition-shadow"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
+              aria-label="Previous testimonial"
+              className="mt-2 flex-shrink-0 text-primary/40 transition-colors hover:text-accent-ink"
             >
-              <ChevronLeft size={24} />
-            </motion.button>
-            <motion.button
+              <ChevronLeft className="h-8 w-8 sm:h-10 sm:w-10" strokeWidth={1.5} />
+            </button>
+
+            <div className="relative min-h-[280px] flex-1 overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentIndex}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="mb-4 flex gap-1">
+                    {Array(active.rating)
+                      .fill(0)
+                      .map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-accent-ink text-accent-ink" />
+                      ))}
+                  </div>
+
+                  <p className="text-quote font-medium leading-snug text-primary">
+                    &ldquo;{active.text}&rdquo;
+                  </p>
+
+                  <div className="mt-8 flex items-center gap-4">
+                    <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-primary text-base font-bold text-primary-foreground">
+                      {active.name
+                        .split(' ')
+                        .map((part) => part[0])
+                        .join('')}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-primary">{active.name}</h4>
+                      <p className="text-sm text-foreground/60">
+                        <span className="font-semibold text-accent-ink">{active.role}</span> — {active.company}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            <button
               onClick={nextTestimonial}
-              className="p-3 bg-accent text-accent-foreground rounded-full hover:shadow-lg transition-shadow"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
+              aria-label="Next testimonial"
+              className="mt-2 flex-shrink-0 text-primary/40 transition-colors hover:text-accent-ink"
             >
-              <ChevronRight size={24} />
-            </motion.button>
+              <ChevronRight className="h-8 w-8 sm:h-10 sm:w-10" strokeWidth={1.5} />
+            </button>
           </div>
 
-          {/* Dots Indicator */}
-          <div className="flex justify-center gap-2 mt-6">
+          <div className="mt-10 flex gap-2 pl-10 sm:pl-16">
             {testimonials.map((_, i) => (
-              <motion.button
+              <button
                 key={i}
                 onClick={() => setCurrentIndex(i)}
-                className={`h-2 rounded-full transition-all ${
-                  i === currentIndex ? 'bg-accent w-8' : 'bg-muted w-2'
+                aria-label={`Show testimonial ${i + 1}`}
+                className={`h-0.5 transition-all ${
+                  i === currentIndex ? 'w-8 bg-accent-ink' : 'w-4 bg-primary/20'
                 }`}
-                whileHover={{ scale: 1.2 }}
               />
             ))}
           </div>
         </div>
 
-        {/* CTA */}
         <motion.div
-          className="text-center mt-12"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
           transition={defaultTransition}
+          className="mt-16 flex flex-col gap-6 border-t-2 border-primary/15 pt-10 sm:flex-row sm:items-center sm:justify-between"
         >
-          <p className="text-foreground/60 mb-4 text-sm">
-            Join thousands of successful students at FAAST Education , Faisalabad
+          <p className="text-lg font-bold text-primary">
+            Join thousands of successful students at FAAST Education, Faisalabad
           </p>
           <motion.a
             href="https://wa.me/923418576000?text=Hi%2C%20I%20want%20to%20enroll%20at%20FAAST%20Education ."
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-accent text-accent-foreground px-8 py-3 rounded-lg font-bold hover:shadow-lg transition-shadow inline-block"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="inline-flex flex-shrink-0 items-center justify-center bg-accent px-8 py-3 font-bold text-accent-foreground transition-shadow hover:shadow-lg"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
           >
             Start Your Journey Today
           </motion.a>

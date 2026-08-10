@@ -8,7 +8,8 @@ import {
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { defaultTransition, fadeUp, staggerDelay, viewportOnce } from '@/lib/motion'
-import { SectionKicker } from '@/components/section-kicker'
+import { RevealHeading } from '@/components/reveal-heading'
+import { IndexNumeral } from '@/components/index-numeral'
 
 const iconMap: Record<string, React.ElementType> = {
   Moon, Target, Cpu, Heart, Code, FileText, GraduationCap, Stethoscope,
@@ -50,7 +51,7 @@ export default function Programs() {
   }, [])
 
   return (
-    <section id="programs" className="py-20 bg-card">
+    <section id="programs" className="bg-card py-24 sm:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={fadeUp}
@@ -58,83 +59,83 @@ export default function Programs() {
           whileInView="visible"
           viewport={viewportOnce}
           transition={defaultTransition}
-          className="text-center mb-16"
+          className="mb-16 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
         >
-          <SectionKicker>Our Courses</SectionKicker>
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-            Our Courses
-          </h2>
-          <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
-            From evening coaching to top university entry tests — FAAST Education has a course for every student.
+          <div>
+            <span className="text-eyebrow font-bold uppercase text-accent-ink">Our Courses</span>
+            <RevealHeading text="Our courses" as="h2" className="text-h1 mt-2 text-primary" />
+          </div>
+          <p className="max-w-sm text-foreground/70 md:text-right">
+            From evening coaching to top university entry tests — a course for every student.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="border-t-2 border-primary/15">
           {programs.map((program, index) => {
             const Icon = iconMap[program.icon] ?? Target
             const isExpanded = expandedId === program.id
+            const imageOnRight = index % 2 === 1
 
             return (
               <motion.div
                 key={program.id}
-                className="bg-background rounded-xl overflow-hidden border border-border shadow-sm hover:shadow-xl hover:shadow-primary/10 hover:border-accent/40 transition-all group flex flex-col"
+                className="grid gap-8 border-b-2 border-primary/15 py-14 lg:grid-cols-12 lg:gap-12"
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
                 viewport={viewportOnce}
-                transition={{ ...defaultTransition, delay: staggerDelay(index) }}
-                whileHover={{ y: -6 }}
+                transition={{ ...defaultTransition, delay: staggerDelay(index, 0.05, 0.3) }}
               >
-                <div className="relative h-44 overflow-hidden bg-muted flex-shrink-0">
+                {/* Image */}
+                <div
+                  className={`relative h-64 flex-shrink-0 overflow-hidden bg-muted lg:col-span-5 lg:h-80 ${
+                    imageOnRight ? 'lg:order-2' : 'lg:order-1'
+                  }`}
+                >
                   {program.image && !failedImages.has(program.id) && (
                     <Image
                       src={program.image}
                       alt={program.name}
                       fill
-                      className="object-contain group-hover:scale-110 transition-transform duration-700 ease-out"
+                      className="object-contain transition-transform duration-700 ease-out group-hover:scale-105"
                       onError={() => setFailedImages((prev) => new Set(prev).add(program.id))}
                     />
                   )}
-                  {program.image && !failedImages.has(program.id) && (
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
-                  )}
                   {program.badge && (
-                    <span className={`absolute top-3 right-3 ${program.badgeColor ?? 'bg-primary'} text-white text-xs font-bold px-2 py-1 rounded-full`}>
+                    <span className={`absolute top-3 right-3 ${program.badgeColor ?? 'bg-primary'} rounded-full px-2 py-1 text-xs font-bold text-white`}>
                       {program.badge}
                     </span>
                   )}
                 </div>
 
-                <div className="relative -mt-8 z-10 ml-5">
-                  <div className="w-14 h-14 rounded-full bg-background shadow-md border border-border flex items-center justify-center">
-                    <Icon className="w-6 h-6 text-primary" />
+                {/* Content */}
+                <div className={`flex flex-col lg:col-span-7 ${imageOnRight ? 'lg:order-1' : 'lg:order-2'}`}>
+                  <div className="flex items-start gap-4">
+                    <IndexNumeral index={index} className="!text-[clamp(2rem,3vw,3rem)]" />
+                    <Icon className="mt-2 h-6 w-6 flex-shrink-0 text-accent-ink" />
                   </div>
-                </div>
 
-                <div className="p-5 pt-3 flex flex-col flex-1">
-                  <h3 className="text-lg font-bold text-primary mb-1 leading-tight">{program.name}</h3>
-                  <p className="text-xs text-accent-ink font-semibold mb-2">{program.tagline}</p>
-                  <p className="text-sm text-foreground/70 leading-relaxed mb-3 flex-1">
-                    {program.description}
-                  </p>
+                  <h3 className="mt-2 text-h2 font-bold leading-tight text-primary">{program.name}</h3>
+                  <p className="mt-1 text-sm font-semibold text-accent-ink">{program.tagline}</p>
+                  <p className="mt-3 text-foreground/70 leading-relaxed">{program.description}</p>
 
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    <span className="flex items-center gap-1 text-xs bg-muted rounded-full px-2 py-1 text-foreground/60">
-                      <Clock className="w-3 h-3" /> {program.duration}
+                  <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-foreground/60">
+                    <span className="flex items-center gap-1.5">
+                      <Clock className="h-4 w-4" /> {program.duration}
                     </span>
-                    <span className="flex items-center gap-1 text-xs bg-muted rounded-full px-2 py-1 text-foreground/60">
-                      <Users className="w-3 h-3" /> {program.level}
+                    <span className="flex items-center gap-1.5">
+                      <Users className="h-4 w-4" /> {program.level}
                     </span>
                   </div>
 
                   <button
                     onClick={() => setExpandedId(isExpanded ? null : program.id)}
-                    className="flex items-center justify-between w-full text-sm font-semibold text-primary hover:text-accent transition-colors mb-2"
+                    className="mt-5 flex w-full items-center justify-between border-t-2 border-primary/15 py-3 text-sm font-semibold text-primary transition-colors hover:text-accent-ink"
                   >
-                    <span className="flex items-center gap-1">
-                      <BookOpen className="w-4 h-4" /> Course Details
+                    <span className="flex items-center gap-1.5">
+                      <BookOpen className="h-4 w-4" /> Course Details
                     </span>
-                    {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                    {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                   </button>
 
                   <AnimatePresence initial={false}>
@@ -145,17 +146,17 @@ export default function Programs() {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="space-y-1 mb-3 overflow-hidden"
+                        className="space-y-2 overflow-hidden pb-4"
                       >
                         {program.details.map((detail, i) => (
-                          <li key={i} className="flex items-start gap-2 text-xs text-foreground/70">
-                            <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0 mt-1.5" />
+                          <li key={i} className="flex items-start gap-2 text-sm text-foreground/70">
+                            <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" />
                             {detail}
                           </li>
                         ))}
                         {program.university && (
-                          <li className="flex items-center gap-1.5 text-xs text-primary font-semibold mt-2 pt-2 border-t border-border">
-                            <Landmark className="w-3.5 h-3.5 flex-shrink-0" /> {program.university}
+                          <li className="mt-2 flex items-center gap-1.5 border-t border-primary/10 pt-2 text-sm font-semibold text-primary">
+                            <Landmark className="h-4 w-4 flex-shrink-0" /> {program.university}
                           </li>
                         )}
                       </motion.ul>
@@ -170,39 +171,41 @@ export default function Programs() {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="mb-3 space-y-2 border-t border-border pt-3 overflow-hidden"
+                        className="space-y-2 overflow-hidden border-t border-primary/10 pt-3 pb-4"
                       >
-                        <div className="text-xs font-bold text-primary uppercase tracking-wide">Batches Offered</div>
+                        <div className="text-xs font-bold uppercase tracking-wide text-primary">Batches Offered</div>
                         {program.subCourses.map((sub, i) => (
-                          <div key={i} className="bg-muted rounded-lg p-2.5">
+                          <div key={i} className="border-l-2 border-accent/40 pl-3">
                             <div className="flex items-baseline justify-between gap-2">
-                              <span className="text-xs font-bold text-primary">{sub.name}</span>
-                              <span className="text-[10px] text-foreground/60 flex-shrink-0">{sub.duration}</span>
+                              <span className="text-sm font-bold text-primary">{sub.name}</span>
+                              <span className="flex-shrink-0 text-xs text-foreground/60">{sub.duration}</span>
                             </div>
-                            <p className="text-[11px] text-foreground/70 mt-1 leading-relaxed">{sub.description}</p>
+                            <p className="mt-1 text-xs leading-relaxed text-foreground/70">{sub.description}</p>
                           </div>
                         ))}
                       </motion.div>
                     )}
                   </AnimatePresence>
 
-                  <a
-                    href={`/programs/${program.id}`}
-                    className="group/link flex items-center justify-center gap-1.5 w-full border border-primary text-primary font-semibold py-2 rounded-lg hover:bg-primary/5 transition-colors text-sm text-center mb-2"
-                  >
-                    View Full Details <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/link:translate-x-1" />
-                  </a>
+                  <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                    <a
+                      href={`/programs/${program.id}`}
+                      className="group/link flex flex-1 items-center justify-center gap-1.5 border-2 border-primary py-3 text-center text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
+                    >
+                      View Full Details <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-1" />
+                    </a>
 
-                  <motion.a
-                    href={`https://wa.me/923418576000?text=${encodeURIComponent(`Hi, I am interested in ${program.name} at FAAST Education . Please share details.`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full bg-accent text-accent-foreground font-bold py-2.5 rounded-lg hover:shadow-lg transition-shadow text-sm text-center block"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Enroll Now
-                  </motion.a>
+                    <motion.a
+                      href={`https://wa.me/923418576000?text=${encodeURIComponent(`Hi, I am interested in ${program.name} at FAAST Education . Please share details.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 bg-accent py-3 text-center text-sm font-bold text-accent-foreground transition-shadow hover:shadow-lg"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      Enroll Now
+                    </motion.a>
+                  </div>
                 </div>
               </motion.div>
             )
@@ -210,33 +213,33 @@ export default function Programs() {
         </div>
 
         <motion.div
-          className="mt-12 bg-brand-navy rounded-2xl p-8 text-brand-navy-foreground text-center"
+          className="mt-16 bg-brand-navy p-10 text-brand-navy-foreground sm:p-14"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
           transition={defaultTransition}
         >
-          <h3 className="flex items-center justify-center gap-2 text-2xl font-bold mb-2">
-            <Calendar className="w-6 h-6" /> Flexible Batch Timings
+          <h3 className="flex items-center gap-2 text-h2 font-bold">
+            <Calendar className="h-7 w-7 flex-shrink-0" /> Flexible Batch Timings
           </h3>
-          <p className="text-brand-navy-foreground/80 mb-6 max-w-xl mx-auto">
+          <p className="mt-3 max-w-xl text-brand-navy-foreground/80">
             Morning and Evening batches available for all courses. New batches starting every month.
           </p>
-          <div className="flex flex-wrap justify-center gap-6 text-sm">
+          <div className="mt-8 grid gap-6 border-t border-brand-navy-foreground/15 pt-8 sm:grid-cols-3">
             {[
               { time: 'Morning', hours: '8:00 AM – 12:00 PM' },
               { time: 'Afternoon', hours: '12:00 PM – 4:00 PM' },
               { time: 'Evening', hours: '4:00 PM – 9:00 PM' },
             ].map((slot) => (
-              <div key={slot.time} className="bg-brand-navy-foreground/10 rounded-xl px-6 py-3">
-                <div className="font-bold text-accent">{slot.time}</div>
+              <div key={slot.time}>
+                <div className="text-lg font-bold text-accent">{slot.time}</div>
                 <div className="text-brand-navy-foreground/80">{slot.hours}</div>
               </div>
             ))}
           </div>
-          <p className="mt-6 flex items-center justify-center gap-1.5 text-brand-navy-foreground/70 text-sm">
-            <Phone className="w-4 h-4" /> Call us at <a href="tel:+923418576000" className="text-accent font-bold hover:underline">03418576000</a> to book your seat
+          <p className="mt-8 flex items-center gap-1.5 text-sm text-brand-navy-foreground/70">
+            <Phone className="h-4 w-4" /> Call us at <a href="tel:+923418576000" className="font-bold text-accent hover:underline">03418576000</a> to book your seat
           </p>
         </motion.div>
       </div>

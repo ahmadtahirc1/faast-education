@@ -33,7 +33,6 @@ export default function Footer() {
   const quickLinks = [
     { name: 'About Us', href: '#about' },
     { name: 'Courses', href: '/programs' },
-    { name: 'Facilities', href: '/facilities' },
     { name: 'Achievements', href: '#achievements' },
     { name: 'FAQ', href: '#faq' },
     { name: 'Contact', href: '#contact' },
@@ -53,16 +52,17 @@ export default function Footer() {
   return (
     <footer className="bg-brand-navy text-brand-navy-foreground border-t-4 border-accent py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid gap-12 border-b-2 border-brand-navy-foreground/15 pb-12 mb-8 md:grid-cols-2 lg:grid-cols-4 lg:gap-x-12 lg:gap-y-0">
 
           {/* Brand Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="lg:border-r-2 lg:border-brand-navy-foreground/15 lg:pr-8"
           >
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-lg overflow-hidden bg-brand-navy-foreground/10 ring-1 ring-brand-navy-foreground/20">
+              <div className="w-12 h-12 overflow-hidden bg-brand-navy-foreground/10 ring-1 ring-brand-navy-foreground/20">
                 <Image
                   src="/new-logo-faast.jpeg"
                   alt="FAAST Education logo"
@@ -71,7 +71,7 @@ export default function Footer() {
                   className="h-full w-full object-cover"
                 />
               </div>
-              <span className="text-2xl font-bold">FAAST Education</span>
+              <span className="text-3xl font-bold">FAAST Education</span>
             </div>
             <p className="text-brand-navy-foreground/70 mb-2 italic text-sm">&ldquo;Each one Teach one&rdquo;</p>
             <p className="text-brand-navy-foreground/60 mb-6 text-sm leading-relaxed">
@@ -88,7 +88,7 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-2 bg-brand-navy-foreground/10 rounded-lg ${social.color} transition-colors`}
+                    className={`p-2 bg-brand-navy-foreground/10 ${social.color} transition-colors`}
                     whileHover={{ scale: 1.1 }}
                     title={social.label}
                   >
@@ -104,8 +104,9 @@ export default function Footer() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.6 }}
+            className="lg:border-r-2 lg:border-brand-navy-foreground/15 lg:pr-8"
           >
-            <h3 className="font-bold text-lg mb-4">Quick Links</h3>
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-accent mb-4">Quick Links</h3>
             <ul className="space-y-2">
               {quickLinks.map((link, index) => (
                 <li key={index}>
@@ -122,8 +123,9 @@ export default function Footer() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
+            className="lg:border-r-2 lg:border-brand-navy-foreground/15 lg:pr-8"
           >
-            <h3 className="font-bold text-lg mb-4">Our Courses</h3>
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-accent mb-4">Our Courses</h3>
             <ul className="space-y-2">
               {programs.map((link, index) => (
                 <li key={index}>
@@ -141,7 +143,7 @@ export default function Footer() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
-            <h3 className="font-bold text-lg mb-4">Contact Us</h3>
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-accent mb-4">Contact Us</h3>
             <ul className="space-y-4">
               <li>
                 <a href="tel:+923418576000" className="flex items-start gap-3 hover:text-accent transition-colors group">
@@ -178,7 +180,7 @@ export default function Footer() {
               href="https://wa.me/923418576000?text=Hi%2C%20I%20am%20interested%20in%20FAAST%20Education."
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
+              className="mt-5 flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 text-sm font-semibold transition-colors"
               whileHover={{ scale: 1.02 }}
             >
               <MessageCircle size={16} />
@@ -187,8 +189,7 @@ export default function Footer() {
           </motion.div>
         </div>
 
-        {/* Divider */}
-        <div className="border-t border-brand-navy-foreground/20 pt-8">
+        <div>
           <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-4">
             <p className="text-brand-navy-foreground/60 text-sm">
               © {currentYear} FAAST Education, Faisalabad. All rights reserved.

@@ -61,12 +61,6 @@ export type SiteContent = {
     studentPositions: string
   }
   features: string[]
-  facilities?: Array<{
-    title: string
-    description: string
-    image?: string
-    icon: string
-  }>
   galleryImages?: Array<{
     src: string
     title: string

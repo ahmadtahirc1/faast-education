@@ -269,28 +269,6 @@
     "Dedicated doubt-clearing sessions",
     "Proven track record of top results"
   ],
-  "facilities": [
-    {
-      "title": "Premium Library",
-      "description": "Access to thousands of books, journals, and digital resources for continuous learning.",
-      "icon": "BookOpen"
-    },
-    {
-      "title": "Advanced Lab",
-      "description": "State-of-the-art computer lab with latest software and technology infrastructure.",
-      "icon": "Cpu"
-    },
-    {
-      "title": "Modern Auditorium",
-      "description": "Professional lecture halls equipped with high-tech audio-visual and presentation systems.",
-      "icon": "Presentation"
-    },
-    {
-      "title": "Networking Lounge",
-      "description": "Elegant spaces designed for professional networking and collaborative learning.",
-      "icon": "Coffee"
-    }
-  ],
   "galleryImages": [
     {
       "src": "/reward cermoney.jpeg",

@@ -20,7 +20,6 @@ export default function Navbar() {
     { label: 'Home', href: '/' },
     { label: 'About', href: '/about' },
     { label: 'Courses', href: '/programs' },
-    { label: 'Facilities', href: '/facilities' },
     { label: 'Founder', href: '/founder' },
     { label: 'Contact', href: '/contact' },
   ]
@@ -93,7 +92,7 @@ export default function Navbar() {
                 <a
                   key={item.label}
                   href={item.href}
-                  className="text-foreground font-medium hover:text-primary transition-colors"
+                  className="border-b-2 border-transparent pb-1 text-xs font-bold uppercase tracking-[0.15em] text-foreground transition-colors hover:border-accent-ink hover:text-accent-ink"
                 >
                   {item.label}
                 </a>
@@ -101,7 +100,7 @@ export default function Navbar() {
               <ThemeToggle />
               <a
                 href="/contact"
-                className="bg-accent text-accent-foreground px-6 py-2.5 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+                className="bg-accent text-accent-foreground px-6 py-2.5 font-bold text-sm uppercase tracking-[0.1em] hover:opacity-90 transition-opacity"
               >
                 Enroll Now
               </a>
@@ -122,12 +121,12 @@ export default function Navbar() {
 
           {/* Mobile Menu */}
           {isOpen && (
-            <div className="lg:hidden pb-4 space-y-1 border-t border-border pt-3">
+            <div className="lg:hidden pb-4 space-y-1 border-t-2 border-primary/15 pt-3">
               {navItems.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
-                  className="block px-4 py-2 text-foreground hover:bg-muted rounded-lg transition-colors"
+                  className="block px-4 py-2 text-sm font-bold uppercase tracking-[0.1em] text-foreground hover:text-accent-ink transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
                   {item.label}
@@ -135,7 +134,7 @@ export default function Navbar() {
               ))}
               <a
                 href="/contact"
-                className="block w-full bg-accent text-accent-foreground px-4 py-2 rounded-lg font-semibold text-center mt-2"
+                className="block w-full bg-accent text-accent-foreground px-4 py-3 font-bold uppercase tracking-[0.1em] text-center mt-2"
                 onClick={() => setIsOpen(false)}
               >
                 Enroll Now

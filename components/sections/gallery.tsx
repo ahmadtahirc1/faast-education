@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import { X } from 'lucide-react'
 import { defaultTransition, fadeUp, scaleIn, staggerDelay, viewportOnce } from '@/lib/motion'
-import { SectionKicker } from '@/components/section-kicker'
+import { RevealHeading } from '@/components/reveal-heading'
 
 type GalleryImage = {
   src: string
@@ -33,7 +33,7 @@ export default function Gallery() {
   }, [selectedImage])
 
   return (
-    <section id="gallery" className="py-20 bg-card">
+    <section id="gallery" className="bg-card py-24 sm:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={fadeUp}
@@ -41,44 +41,41 @@ export default function Gallery() {
           whileInView="visible"
           viewport={viewportOnce}
           transition={defaultTransition}
-          className="text-center mb-16"
+          className="mb-16 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
         >
-          <SectionKicker>Gallery</SectionKicker>
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-            Campus Life & Events
-          </h2>
-          <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
+          <div>
+            <span className="text-eyebrow font-bold uppercase text-accent-ink">Gallery</span>
+            <RevealHeading text="Campus life & events" as="h2" className="text-h1 mt-2 text-primary" />
+          </div>
+          <p className="max-w-sm text-foreground/70 md:text-right">
             Moments from our vibrant community of learners and achievers.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 gap-3 auto-rows-[160px] sm:gap-4 sm:auto-rows-[200px] lg:grid-cols-4 lg:auto-rows-[220px]">
           {galleryImages.map((image, index) => (
             <motion.div
               key={`${image.src}-${index}`}
-              className="relative h-64 rounded-xl overflow-hidden cursor-pointer group bg-muted shadow-sm hover:shadow-xl transition-shadow"
+              className={`group relative cursor-pointer overflow-hidden bg-muted ${
+                index === 0 ? 'col-span-2 row-span-2' : 'col-span-1 row-span-1'
+              }`}
               variants={scaleIn}
               initial="hidden"
               whileInView="visible"
               viewport={viewportOnce}
               transition={{ ...defaultTransition, delay: staggerDelay(index) }}
-              whileHover={{ scale: 1.02 }}
               onClick={() => setSelectedImage(image.src)}
             >
               <Image
                 src={image.src}
                 alt={image.title}
                 fill
-                className="object-cover group-hover:scale-110 transition-transform duration-500"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-white font-bold text-lg opacity-0 group-hover:opacity-100 transition-opacity">
-                    {image.title}
-                  </div>
-                  <div className="text-white/80 text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                    Click to expand
-                  </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="absolute bottom-0 left-0 p-4">
+                <div className="translate-y-2 text-xs font-bold uppercase tracking-[0.2em] text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                  {image.title}
                 </div>
               </div>
             </motion.div>
@@ -96,7 +93,7 @@ export default function Gallery() {
             onClick={() => setSelectedImage(null)}
           >
             <motion.div
-              className="relative max-w-4xl w-full"
+              className="relative max-h-[85vh] max-w-4xl w-full aspect-[4/3]"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -105,14 +102,13 @@ export default function Gallery() {
               <Image
                 src={selectedImage}
                 alt="Gallery"
-                width={1200}
-                height={600}
-                className="w-full h-auto rounded-xl"
+                fill
+                className="object-contain"
               />
               <button
                 onClick={() => setSelectedImage(null)}
                 aria-label="Close"
-                className="absolute top-4 right-4 bg-white text-black p-2 rounded-full hover:bg-gray-200 transition-colors"
+                className="absolute top-4 right-4 bg-white text-black p-2 hover:bg-gray-200 transition-colors"
               >
                 <X size={24} />
               </button>

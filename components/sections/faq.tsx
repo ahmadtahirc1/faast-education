@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { defaultTransition, fadeUp, staggerDelay, viewportOnce } from '@/lib/motion'
-import { SectionKicker } from '@/components/section-kicker'
+import { RevealHeading } from '@/components/reveal-heading'
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
@@ -53,26 +53,21 @@ export default function FAQ() {
   ]
 
   return (
-    <section id="faq" className="py-20 bg-background">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="faq" className="bg-background py-24 sm:py-32">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
           transition={defaultTransition}
-          className="text-center mb-16"
+          className="mb-16"
         >
-          <SectionKicker>FAQ</SectionKicker>
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-xl text-foreground/70">
-            Everything you need to know about FAAST Education  and our programs.
-          </p>
+          <span className="text-eyebrow font-bold uppercase text-accent-ink">FAQ</span>
+          <RevealHeading text="Frequently asked questions" as="h2" className="text-h1 mt-2 text-primary" />
         </motion.div>
 
-        <div className="space-y-4">
+        <div className="border-t-2 border-primary/15">
           {faqs.map((faq, index) => (
             <motion.div
               key={index}
@@ -81,19 +76,25 @@ export default function FAQ() {
               whileInView="visible"
               viewport={viewportOnce}
               transition={{ ...defaultTransition, delay: staggerDelay(index) }}
-              className="bg-card rounded-xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+              className="border-b-2 border-primary/15 py-6"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full px-6 py-4 flex items-center justify-between hover:bg-muted transition-colors text-left"
+                className="group flex w-full items-start justify-between gap-6 text-left"
               >
-                <span className="font-semibold text-base text-primary pr-4">{faq.question}</span>
-                <motion.div
-                  animate={{ rotate: openIndex === index ? 180 : 0 }}
+                <span className="flex gap-5 sm:gap-8">
+                  <span className="pt-1 text-sm font-bold text-accent-ink">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="text-lg font-bold text-primary transition-colors group-hover:text-accent-ink sm:text-xl">
+                    {faq.question}
+                  </span>
+                </span>
+                <motion.span
+                  animate={{ rotate: openIndex === index ? 45 : 0 }}
                   transition={{ duration: 0.3 }}
+                  className="mt-1 flex-shrink-0"
                 >
-                  <ChevronDown className="w-5 h-5 text-accent flex-shrink-0" />
-                </motion.div>
+                  <Plus className="h-5 w-5 text-primary" />
+                </motion.span>
               </button>
 
               <AnimatePresence initial={false}>
@@ -104,9 +105,11 @@ export default function FAQ() {
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="px-6 py-4 bg-muted/50 border-t border-border overflow-hidden"
+                    className="overflow-hidden"
                   >
-                    <p className="text-foreground/70 leading-relaxed text-sm">{faq.answer}</p>
+                    <p className="pl-10 pr-10 pt-4 text-sm leading-relaxed text-foreground/70 sm:pl-14">
+                      {faq.answer}
+                    </p>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -120,25 +123,25 @@ export default function FAQ() {
           whileInView="visible"
           viewport={viewportOnce}
           transition={{ ...defaultTransition, delay: 0.15 }}
-          className="text-center mt-12"
+          className="mt-16 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
         >
-          <p className="text-foreground/70 mb-4">Still have questions?</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <p className="text-lg font-bold text-primary">Still have questions?</p>
+          <div className="flex flex-col gap-4 sm:flex-row">
             <motion.a
               href="https://wa.me/923418576000?text=Hi%2C%20I%20have%20a%20question%20about%20FAAST%20Education ."
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-green-500 text-white px-8 py-3 rounded-lg font-bold hover:shadow-lg transition-shadow inline-flex items-center justify-center gap-2"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center justify-center gap-2 bg-green-500 px-8 py-3 font-bold text-white transition-shadow hover:shadow-lg"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
             >
               WhatsApp Us
             </motion.a>
             <motion.a
               href="tel:+923418576000"
-              className="bg-accent text-accent-foreground px-8 py-3 rounded-lg font-bold hover:shadow-lg transition-shadow inline-flex items-center justify-center gap-2"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center justify-center gap-2 bg-accent px-8 py-3 font-bold text-accent-foreground transition-shadow hover:shadow-lg"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
             >
               Call: 03418576000
             </motion.a>

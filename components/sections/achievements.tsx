@@ -1,10 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Award, Users, BookOpen, ClipboardCheck } from 'lucide-react'
+import { Award, Users, BookOpen, ClipboardCheck, ArrowUpRight } from 'lucide-react'
 import { defaultTransition, fadeUp, staggerDelay, viewportOnce } from '@/lib/motion'
-import { SectionKicker } from '@/components/section-kicker'
-import { DecorativeBlobs } from '@/components/decorative-blobs'
+import { RevealHeading } from '@/components/reveal-heading'
+import { IndexNumeral } from '@/components/index-numeral'
 
 export default function Achievements() {
   const values = [
@@ -31,8 +31,7 @@ export default function Achievements() {
   ]
 
   return (
-    <section id="achievements" className="relative overflow-hidden py-20 bg-background">
-      <DecorativeBlobs variant="primary" />
+    <section id="achievements" className="bg-background py-24 sm:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={fadeUp}
@@ -40,60 +39,59 @@ export default function Achievements() {
           whileInView="visible"
           viewport={viewportOnce}
           transition={defaultTransition}
-          className="text-center mb-16"
+          className="mb-16 flex flex-col gap-4 md:flex-row md:items-end md:justify-between"
         >
-          <SectionKicker>Why Choose Us</SectionKicker>
-          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-            Why Students Choose Us
-          </h2>
-          <p className="text-xl text-foreground/70 max-w-2xl mx-auto">
-            FAAST Education is Faisalabad&apos;s coaching institute for academic excellence and entry test preparation.
+          <div>
+            <span className="text-eyebrow font-bold uppercase text-accent-ink">Why Choose Us</span>
+            <RevealHeading
+              text="Why students choose us"
+              as="h2"
+              className="text-h1 mt-2 text-primary"
+            />
+          </div>
+          <p className="max-w-sm text-foreground/70 md:text-right">
+            Faisalabad&apos;s coaching institute for academic excellence and entry test preparation.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid border-t-2 border-primary/15 md:grid-cols-4 md:border-t-0">
           {values.map((value, index) => {
             const Icon = value.icon
             return (
               <motion.div
                 key={index}
-                className="bg-card rounded-xl p-8 border border-border text-center shadow-sm hover:shadow-xl hover:shadow-accent/10 transition-shadow"
+                className="border-b-2 border-primary/15 py-8 pr-6 md:border-b-0 md:border-l-2 md:py-0 md:pl-8 md:pr-6 first:md:border-l-0 first:md:pl-0"
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
                 viewport={viewportOnce}
                 transition={{ ...defaultTransition, delay: staggerDelay(index) }}
-                whileHover={{ y: -5 }}
               >
-                <motion.div
-                  className="inline-block p-4 bg-accent/10 rounded-lg mb-4"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                >
-                  <Icon className="w-8 h-8 text-accent" />
-                </motion.div>
-
-                <h3 className="text-xl font-bold text-primary mb-2">{value.title}</h3>
-                <p className="text-foreground/70 leading-relaxed text-sm">{value.description}</p>
+                <IndexNumeral index={index} />
+                <Icon className="mt-4 h-7 w-7 text-accent-ink" />
+                <h3 className="mt-4 text-lg font-bold text-primary">{value.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-foreground/70">{value.description}</p>
               </motion.div>
             )
           })}
         </div>
 
         <motion.div
-          className="mt-12 text-center"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
           transition={defaultTransition}
+          className="mt-16"
         >
           <a
             href="https://www.facebook.com/p/FAAST-Education-100064106918760/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-2.5 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity"
+            className="group inline-flex items-center gap-1.5 text-sm font-semibold text-primary underline decoration-primary/30 underline-offset-4 transition-colors hover:text-accent-ink hover:decoration-accent-ink"
           >
-            Visit Our Facebook Page →
+            Visit Our Facebook Page
+            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
         </motion.div>
       </div>

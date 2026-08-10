@@ -54,6 +54,20 @@
   --shadow-lg: 0 12px 24px -6px rgb(var(--shadow-tint) / 0.14), 0 4px 8px -4px rgb(var(--shadow-tint) / 0.08);
   --shadow-xl: 0 24px 48px -12px rgb(var(--shadow-tint) / 0.18), 0 8px 16px -8px rgb(var(--shadow-tint) / 0.10);
   --shadow-2xl: 0 32px 64px -16px rgb(var(--shadow-tint) / 0.24);
+
+  /* Bold-editorial fluid type scale - additive, on top of the existing
+     Sora/Inter heading rule in @layer base below. */
+  --text-display: clamp(2.75rem, 5vw + 1.5rem, 7.5rem);
+  --text-display--line-height: 0.95;
+  --text-h1: clamp(2.25rem, 3vw + 1.25rem, 4.5rem);
+  --text-h1--line-height: 1.05;
+  --text-h2: clamp(1.75rem, 2vw + 1rem, 3rem);
+  --text-h2--line-height: 1.1;
+  --text-quote: clamp(1.25rem, 1.5vw + 1rem, 2rem);
+  --text-quote--line-height: 1.35;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.4;
+  --text-eyebrow--letter-spacing: 0.28em;
 }
 
 :root {

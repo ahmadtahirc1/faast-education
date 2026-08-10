@@ -1,5 +1,13 @@
 import type { Transition, Variants } from 'framer-motion'
 
+// Rule for every animated element in this app: give it its OWN
+// initial="hidden" whileInView="visible" viewport={viewportOnce} (or literal
+// inline variants). Never rely on inherited variant context from a
+// staggerContainer() parent - that pattern gets children stuck at `hidden`
+// forever in this codebase (see staggerDelay below for the cascade-effect
+// replacement). staggerContainer() is kept only for not-yet-migrated call
+// sites; do not use it in new code.
+
 export const defaultTransition: Transition = { duration: 0.6, ease: 'easeOut' }
 
 // amount: 'some' (not a fixed fraction) - a stagger container wrapping a

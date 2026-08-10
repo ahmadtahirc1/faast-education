@@ -206,7 +206,7 @@ export default function Footer() {
           <div className="mt-4 text-center text-brand-navy-foreground/60 text-xs md:text-sm">
             Developed by{' '}
             <a
-              href="https://v0-modernportfolio-ebon.vercel.app/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAb21jcASiT-pleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAafK0USJ4U01Vl4d9GElUxFyZMoX6twfDSWMo3BYPvvAwN74D9EmOM9pHWHLyw_aem_91C3ngfw_UY623Uj1YLWCw"
+              href="https://muhammad-ahmad-kalt.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-accent hover:underline font-semibold"

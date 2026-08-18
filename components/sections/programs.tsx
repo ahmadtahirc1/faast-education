@@ -26,7 +26,6 @@ type ProgramItem = {
   duration: string
   timing: string
   level: string
-  color: string
   image?: string
   badge?: string
   badgeColor?: string

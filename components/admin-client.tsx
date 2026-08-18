@@ -33,15 +33,6 @@ const defaultContent: SiteContent = {
   founderImage: '',
   announcement: defaultAnnouncement,
   programs: [],
-  achievements: {
-    rating: '100% recommend',
-    reviews: 22,
-    facebookLikes: 6020,
-    talkingAbout: 123,
-    followers: '6K+',
-    studentPositions: 'Monthly position holders recognized regularly',
-  },
-  features: [],
 }
 
 export default function AdminClient() {
@@ -174,7 +165,6 @@ export default function AdminClient() {
           duration: '1 Month',
           timing: 'Flexible',
           level: 'All Levels',
-          color: 'primary',
           image: '',
         },
       ],

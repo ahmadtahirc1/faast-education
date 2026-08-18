@@ -43,7 +43,6 @@
       "duration": "Full Academic Year",
       "timing": "4:00 PM – 9:00 PM",
       "level": "Matric & Intermediate",
-      "color": "primary",
       "image": "/uploads/1784282195312-faast_logo.jpeg",
       "subCourses": [
         {
@@ -103,7 +102,6 @@
       "duration": "3 – 6 Months",
       "timing": "Morning & Evening Batches",
       "level": "FSc Graduates",
-      "color": "secondary",
       "image": "/uploads/1784284067657-WhatsApp_Image_2026-07-17_at_3.18.23_PM.jpeg"
     },
     {
@@ -126,7 +124,6 @@
       "duration": "3 – 4 Months",
       "timing": "Morning & Evening Batches",
       "level": "FSc Pre-Engineering",
-      "color": "accent",
       "image": "/uploads/1784284060781-WhatsApp_Image_2026-07-17_at_3.18.23_PM.jpeg",
       "university": "NUST - National University of Sciences & Technology"
     },
@@ -151,7 +148,6 @@
       "duration": "4 – 6 Months",
       "timing": "Morning & Evening Batches",
       "level": "FSc Pre-Medical (Minimum 60%)",
-      "color": "primary",
       "image": "/uploads/1784283600159-WhatsApp_Image_2026-07-17_at_3.18.23_PM__2_.jpeg",
       "university": "PMC - Pakistan Medical Commission"
     },
@@ -175,7 +171,6 @@
       "duration": "3 – 4 Months",
       "timing": "Morning & Evening Batches",
       "level": "FSc Pre-Medical",
-      "color": "secondary",
       "image": "/uploads/1784284031338-WhatsApp_Image_2026-07-17_at_3.18.23_PM__2_.jpeg",
       "university": "NUMS - National University of Medical Sciences"
     },
@@ -199,7 +194,6 @@
       "duration": "2 – 3 Months",
       "timing": "Morning & Evening Batches",
       "level": "FSc Pre-Engineering / ICS",
-      "color": "accent",
       "image": "/uploads/1784283610657-WhatsApp_Image_2026-07-17_at_3.18.23_PM__2_.jpeg",
       "university": "FAST-NUCES - Foundation for Advancement of Science & Technology"
     },
@@ -223,7 +217,6 @@
       "duration": "1 – 2 Months",
       "timing": "Flexible Batches",
       "level": "Intermediate & Graduates",
-      "color": "primary",
       "university": "NTS - National Testing Service Pakistan"
     },
     {
@@ -246,27 +239,8 @@
       "duration": "2 – 3 Months",
       "timing": "Morning Batches",
       "level": "High-Achieving FSc / A-Level Students",
-      "color": "secondary",
       "image": "/uploads/1784284044001-WhatsApp_Image_2026-07-17_at_3.18.22_PM.jpeg",
       "university": "LUMS - Lahore University of Management Sciences"
     }
-  ],
-  "achievements": {
-    "rating": "100% recommend",
-    "reviews": 22,
-    "facebookLikes": 6020,
-    "talkingAbout": 123,
-    "followers": "6K+",
-    "studentPositions": "Monthly position holders recognized regularly"
-  },
-  "features": [
-    "Experienced and highly qualified faculty",
-    "Personalized attention with small batch sizes",
-    "Regular tests, mock exams & performance tracking",
-    "Monthly recognition for top performers",
-    "Flexible batch timings (Morning & Evening)",
-    "Affordable fee structure with easy installments",
-    "Dedicated doubt-clearing sessions",
-    "Proven track record of top results"
   ]
 }

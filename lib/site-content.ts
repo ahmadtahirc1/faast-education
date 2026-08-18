@@ -41,7 +41,6 @@ export type SiteContent = {
     duration: string
     timing: string
     level: string
-    color: string
     image?: string
     badge?: string
     badgeColor?: string
@@ -52,15 +51,6 @@ export type SiteContent = {
       description: string
     }>
   }>
-  achievements: {
-    rating: string
-    reviews: number
-    facebookLikes: number
-    talkingAbout: number
-    followers: string
-    studentPositions: string
-  }
-  features: string[]
 }
 
 const contentPath = path.join(process.cwd(), 'data', 'academy.json')

@@ -1,29 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { CheckCircle, Award, MapPin, GraduationCap, ArrowUpRight } from 'lucide-react'
+import { CheckCircle, Award, MapPin, ArrowUpRight } from 'lucide-react'
 import { defaultTransition, fadeUp, staggerDelay, viewportOnce } from '@/lib/motion'
 import { RevealHeading } from '@/components/reveal-heading'
 
-type AboutContent = {
-  founderImage?: string
-}
-
 export default function About() {
-  const [content, setContent] = useState<AboutContent>({})
-  const [founderImageFailed, setFounderImageFailed] = useState(false)
-
-  useEffect(() => {
-    fetch('/api/site-content')
-      .then((res) => res.json())
-      .then((data) => setContent(data))
-      .catch(() => undefined)
-  }, [])
-
-  const founderImage = !founderImageFailed ? content.founderImage : undefined
-
   const features = [
     'Highly qualified and experienced subject specialists',
     'Small batch sizes for personalized attention',
@@ -85,7 +67,7 @@ export default function About() {
             </div>
           </motion.div>
 
-          {/* Right: founder / mission / location fact-strip */}
+          {/* Right: mission / location fact-strip */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -93,35 +75,8 @@ export default function About() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-5"
           >
-            <div className="flex items-center gap-4">
-              {founderImage ? (
-                <Image
-                  src={founderImage}
-                  alt="Sir Rizwan Razi"
-                  width={96}
-                  height={96}
-                  className="h-24 w-24 flex-shrink-0 object-cover object-top"
-                  onError={() => setFounderImageFailed(true)}
-                />
-              ) : (
-                <div className="flex h-24 w-24 flex-shrink-0 items-center justify-center bg-muted">
-                  <GraduationCap className="h-9 w-9 text-muted-foreground" />
-                </div>
-              )}
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-ink">Founder &amp; Vision</p>
-                <h4 className="text-xl font-bold text-primary">Sir Rizwan Razi</h4>
-              </div>
-            </div>
-            <p className="mt-5 text-sm leading-relaxed text-foreground/70">
-              A celebrated mathematician, renowned maths teacher, and source of motivation for students across Pakistan. His dedication to change lives through education, innovation, and disciplined learning continues to inspire the FAAST family.
-            </p>
-            <p className="mt-3 text-sm leading-relaxed text-foreground/70">
-              His message to every FAASTian is simple: <span className="font-semibold text-primary">&ldquo;Win is his identification.&rdquo;</span> We learn, teach, rise, and grow with that spirit.
-            </p>
-
             {/* Mission */}
-            <div className="mt-8 bg-primary p-6 text-primary-foreground">
+            <div className="bg-primary p-6 text-primary-foreground">
               <div className="flex items-start gap-3">
                 <Award className="h-7 w-7 flex-shrink-0 text-accent" />
                 <div>

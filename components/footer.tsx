@@ -12,6 +12,18 @@ function FacebookIcon({ size = 20 }: { size?: number }) {
   )
 }
 
+function PlayStoreIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 2.5c-.3.3-.5.7-.5 1.2v16.6c0 .5.2.9.5 1.2l.1.1L12.5 12 3.1 2.4z"/>
+      <path d="m15.6 15.1-3.1-3.1L3.1 21.6c.4.3.9.3 1.4.1l11.1-6.6z"/>
+      <path d="m19.5 10.6-3.4-2-3.4 3.4 3.4 3.4 3.4-2c.7-.4.7-1.4-.1-2z"/>
+      <path d="M12.5 12 15.6 8.9 4.5 2.3c-.5-.2-1-.2-1.4.1z"/>
+    </svg>
+  )
+}
+
+
 export default function Footer() {
   const currentYear = new Date().getFullYear()
 
@@ -27,6 +39,12 @@ export default function Footer() {
       href: 'https://wa.me/923418576000',
       label: 'WhatsApp',
       color: 'hover:bg-green-500',
+    },
+    {
+      icon: PlayStoreIcon,
+      href: 'https://play.google.com/store/apps/details?id=com.schoolspk.faast',
+      label: 'Get our app on Google Play',
+      color: 'hover:bg-emerald-500',
     },
   ]
 

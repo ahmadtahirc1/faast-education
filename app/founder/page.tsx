@@ -41,7 +41,7 @@ export default function FounderPage() {
                 src={founderImage}
                 alt="Sir Rizwan Razi"
                 fill
-                className="object-cover"
+                className="object-cover object-top"
                 onError={() => setFounderImageFailed(true)}
               />
             ) : (

@@ -42,7 +42,6 @@ const defaultContent: SiteContent = {
     studentPositions: 'Monthly position holders recognized regularly',
   },
   features: [],
-  galleryImages: [],
 }
 
 export default function AdminClient() {
@@ -72,7 +71,6 @@ export default function AdminClient() {
   }
 
   const programCount = useMemo(() => content.programs?.length ?? 0, [content.programs])
-  const galleryCount = useMemo(() => content.galleryImages?.length ?? 0, [content.galleryImages])
 
   const persistContent = async (nextContent: typeof content) => {
     setContent(nextContent)
@@ -101,15 +99,14 @@ export default function AdminClient() {
 
   const uploadAndUpdate = async (
     file: File,
-    type: 'program' | 'gallery' | 'hero' | 'announcement' | 'founder',
+    type: 'program' | 'hero' | 'announcement' | 'founder',
     index: number,
   ) => {
     const slot =
       type === 'hero' ? `hero-${content.heroImages?.[index]?.id ?? index}` :
       type === 'founder' ? 'founder' :
       type === 'announcement' ? 'announcement' :
-      type === 'program' ? `program-${content.programs?.[index]?.id ?? index}` :
-      `gallery-${index}`
+      `program-${content.programs?.[index]?.id ?? index}`
 
     const formData = new FormData()
     formData.append('file', file)
@@ -141,11 +138,6 @@ export default function AdminClient() {
       next[index] = { ...next[index], image: uploaded.url }
       nextContent = { ...content, programs: next }
       label = 'Course image'
-    } else if (type === 'gallery') {
-      const next = [...(content.galleryImages ?? [])]
-      next[index] = { ...next[index], src: uploaded.url }
-      nextContent = { ...content, galleryImages: next }
-      label = 'Gallery image'
     } else if (type === 'hero') {
       const next = [...(content.heroImages ?? [])]
       next[index] = { ...next[index], src: uploaded.url }
@@ -216,16 +208,6 @@ export default function AdminClient() {
     })
   }
 
-  const addGalleryImage = () => {
-    setContent((prev) => ({
-      ...prev,
-      galleryImages: [
-        ...(prev.galleryImages ?? []),
-        { src: '', title: 'New Gallery Image' },
-      ],
-    }))
-  }
-
   const logout = async () => {
     await fetch('/api/admin/logout', { method: 'POST' })
     window.location.reload()
@@ -242,7 +224,7 @@ export default function AdminClient() {
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
               <h1 className="text-3xl font-bold">FAAST Admin Dashboard</h1>
-              <p className="text-slate-300">Update program cards and gallery images for your client.</p>
+              <p className="text-slate-300">Update program cards and site content for your client.</p>
             </div>
             <div className="flex gap-2">
               <button
@@ -263,7 +245,7 @@ export default function AdminClient() {
           {status && <div className="mt-4 text-sm text-emerald-300">{status}</div>}
         </div>
 
-        <section className="grid gap-4 md:grid-cols-4">
+        <section className="grid gap-4 md:grid-cols-3">
           <div className="rounded-2xl border border-white/10 bg-slate-900 p-5">
             <div className="text-sm text-slate-400">Inquiries</div>
             <div className="mt-2 text-3xl font-bold">{inquiries.length}</div>
@@ -271,10 +253,6 @@ export default function AdminClient() {
           <div className="rounded-2xl border border-white/10 bg-slate-900 p-5">
             <div className="text-sm text-slate-400">Courses</div>
             <div className="mt-2 text-3xl font-bold">{programCount}</div>
-          </div>
-          <div className="rounded-2xl border border-white/10 bg-slate-900 p-5">
-            <div className="text-sm text-slate-400">Gallery</div>
-            <div className="mt-2 text-3xl font-bold">{galleryCount}</div>
           </div>
           <div className="rounded-2xl border border-white/10 bg-slate-900 p-5">
             <div className="text-sm text-slate-400">Status</div>
@@ -595,64 +573,6 @@ export default function AdminClient() {
                     />
                   </label>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="rounded-2xl border border-white/10 bg-slate-900 p-6">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-2xl font-semibold">Gallery</h2>
-            <button
-              onClick={addGalleryImage}
-              className="rounded-lg border border-blue-400 px-3 py-2 text-sm text-blue-300"
-            >
-              Add Gallery Item
-            </button>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {(content.galleryImages ?? []).map((image, index) => (
-              <div key={`${image.src}-${index}`} className="rounded-xl border border-white/10 bg-slate-800 p-4">
-                <div className="relative mb-3 h-48 overflow-hidden rounded-lg bg-slate-700 flex items-center justify-center">
-                  {image.src ? (
-                    <Image src={image.src} alt={image.title} fill className="object-cover" />
-                  ) : (
-                    <span className="text-sm text-slate-400">No image yet</span>
-                  )}
-                </div>
-                <label className="mb-2 block text-sm text-slate-300">Title</label>
-                <input
-                  value={image.title}
-                  onChange={(e) => {
-                    const next = [...(content.galleryImages ?? [])]
-                    next[index] = { ...image, title: e.target.value }
-                    setContent({ ...content, galleryImages: next })
-                  }}
-                  className="w-full rounded-lg border border-white/10 bg-slate-900 px-3 py-2"
-                />
-                <label className="mb-2 mt-3 block text-sm text-slate-300">Image Path</label>
-                <input
-                  value={image.src}
-                  onChange={(e) => {
-                    const next = [...(content.galleryImages ?? [])]
-                    next[index] = { ...image, src: e.target.value }
-                    setContent({ ...content, galleryImages: next })
-                  }}
-                  className="w-full rounded-lg border border-white/10 bg-slate-900 px-3 py-2"
-                />
-                <label className="mb-2 mt-3 block text-sm text-slate-300">Upload new image</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0]
-                    if (file) {
-                      uploadAndUpdate(file, 'gallery', index)
-                    }
-                  }}
-                  className="w-full rounded-lg border border-white/10 bg-slate-900 px-3 py-2"
-                />
               </div>
             ))}
           </div>

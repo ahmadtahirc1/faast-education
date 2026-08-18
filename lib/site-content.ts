@@ -61,10 +61,6 @@ export type SiteContent = {
     studentPositions: string
   }
   features: string[]
-  galleryImages?: Array<{
-    src: string
-    title: string
-  }>
 }
 
 const contentPath = path.join(process.cwd(), 'data', 'academy.json')

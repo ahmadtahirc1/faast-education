@@ -100,7 +100,7 @@ export default function About() {
                   alt="Sir Rizwan Razi"
                   width={96}
                   height={96}
-                  className="h-24 w-24 flex-shrink-0 object-cover"
+                  className="h-24 w-24 flex-shrink-0 object-cover object-top"
                   onError={() => setFounderImageFailed(true)}
                 />
               ) : (

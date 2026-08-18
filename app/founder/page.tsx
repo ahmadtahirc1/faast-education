@@ -34,14 +34,14 @@ export default function FounderPage() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="relative min-h-[360px] lg:col-span-5 lg:min-h-[640px]"
+            className="relative min-h-[360px] bg-muted lg:col-span-5 lg:min-h-[640px]"
           >
             {founderImage ? (
               <Image
                 src={founderImage}
                 alt="Sir Rizwan Razi"
                 fill
-                className="object-cover object-top"
+                className="object-contain lg:object-cover lg:object-top"
                 onError={() => setFounderImageFailed(true)}
               />
             ) : (
